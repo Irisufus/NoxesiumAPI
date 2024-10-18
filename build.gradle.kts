@@ -14,11 +14,20 @@ repositories {
     maven("https://oss.sonatype.org/content/groups/public/") {
         name = "sonatype"
     }
+    maven("https://maven.noxcrew.com/public") {
+        name = "Noxcrew Public Maven Repository"
+    }
+    maven(url = uri("https://repo.codemc.org/repository/maven-public/"))
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    compileOnly("dev.jorel:commandapi-bukkit-core:9.5.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("com.noxcrew.noxesium:api:2.3.3")
+    implementation("com.noxcrew.noxesium:paper:2.3.3")
+    implementation("fr.skytasul:glowingentities:1.3.5")
+    implementation("dev.jorel:commandapi-bukkit-kotlin:9.5.2")
 }
 
 val targetJavaVersion = 21

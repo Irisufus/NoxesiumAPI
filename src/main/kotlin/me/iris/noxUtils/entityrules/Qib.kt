@@ -10,23 +10,13 @@ import me.iris.noxUtils.NoxUtils.Companion.qibDefinitions
 import org.bukkit.entity.Interaction
 import org.bukkit.entity.Player
 
-public class Qibs {
+public class Qib {
 
     private val manager = NoxUtils.noxesiumManager
     private val entityManager = NoxUtils.entityRuleManager
 
-    public fun addDefinition(id: String, effect: QibEffect, onEnter: Boolean?, onLeave: Boolean?, whileInside: Boolean?, onJump: Boolean?, trigger: Boolean) {
-        var enter: QibEffect? = null
-        var leave: QibEffect? = null
-        var inside: QibEffect? = null
-        var jump: QibEffect? = null
-
-        if (onEnter == true) enter = effect
-        if (onLeave == true) leave = effect
-        if (whileInside == true) inside = effect
-        if (onJump == true) jump = effect
-        val definition = QibDefinition(enter, leave, inside, jump, trigger)
-
+    public fun addDefinition(id: String, onEnter: QibEffect?, onLeave: QibEffect?, whileInside: QibEffect?, onJump: QibEffect?, trigger: Boolean) {
+        val definition = QibDefinition(onEnter, onLeave, whileInside, onJump, trigger)
         qibDefinitions[id] = definition
     }
 

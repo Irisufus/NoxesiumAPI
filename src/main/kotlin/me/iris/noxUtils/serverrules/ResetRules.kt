@@ -1,4 +1,4 @@
-package me.iris.noxUtils.rules
+package me.iris.noxUtils.serverrules
 
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import me.iris.noxUtils.NoxUtils
