@@ -1,0 +1,8 @@
+name: NoxUtils
+version: '1.0-SNAPSHOT'
+main: me.iris.noxUtils.NoxUtils
+api-version: '1.21'
+load: STARTUP
+authors: [ Iris ]
+description: A tool to communicate with Noxesium clients (mostly a dependency for skript)
+website: https://github.com/BlockybombDEV/NoxesiumUtilsV2
