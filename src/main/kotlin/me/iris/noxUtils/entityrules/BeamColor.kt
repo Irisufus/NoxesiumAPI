@@ -55,6 +55,7 @@ public class BeamColor {
         }, duration)
     }
 
+    // Will be updated to support minecraft:end_crystal once Paper 1.21.2 comes out
     private fun setBeamColor(guardian: Guardian, color: Optional<Color>) {
         // Set the beam color
         var rule: RemoteServerRule<Any>? = entityManager.getEntityRule(guardian, 1)

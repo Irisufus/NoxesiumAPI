@@ -11,7 +11,7 @@ import org.bukkit.entity.Interaction
 import org.bukkit.entity.Player
 
 public class Qib {
-
+    // Qibs are only usable on minecraft:interaction entities
     private val manager = NoxUtils.noxesiumManager
     private val entityManager = NoxUtils.entityRuleManager
 
