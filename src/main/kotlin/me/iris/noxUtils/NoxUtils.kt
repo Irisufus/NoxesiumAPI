@@ -5,26 +5,31 @@ import com.noxcrew.noxesium.paper.api.EntityRuleManager
 import com.noxcrew.noxesium.paper.api.NoxesiumManager
 import com.noxcrew.noxesium.paper.api.rule.EntityRules
 import com.noxcrew.noxesium.paper.api.rule.ServerRules
+import dev.jorel.commandapi.kotlindsl.commandAPICommand
+import dev.jorel.commandapi.kotlindsl.subcommand
 import fr.skytasul.glowingentities.GlowingBlocks
 import fr.skytasul.glowingentities.GlowingEntities
+import me.iris.noxUtils.commands.Rules
+import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-class NoxUtils : JavaPlugin() {
+public class NoxUtils public constructor() : JavaPlugin() {
 
     public companion object {
-        public var Logger: Logger = LoggerFactory.getLogger("NoxUtils")
         public val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
+        public var Logger: Logger = LoggerFactory.getLogger("NoxUtils")
         public lateinit var instance: NoxUtils
         public lateinit var noxesiumManager: NoxesiumManager
         public lateinit var entityRuleManager: EntityRuleManager
         public lateinit var glowingEntities: GlowingEntities
         public lateinit var glowingBlocks: GlowingBlocks
+
     }
 
     override fun onLoad() {
-        // registerCommands()
+        registerCommands()
     }
 
     override fun onEnable() {
@@ -68,4 +73,15 @@ class NoxUtils : JavaPlugin() {
         entityRuleManager.unregister()
         Logger.info("NoxUtils has been disabled!")
     }
+
+    private fun registerCommands() {
+        Rules().registerCommands()
+        commandAPICommand("serverrules", "noxutils") {
+            withRequirement {sender: CommandSender -> sender.isOp}
+            for (command in Rules.RuleCommands) {
+                subcommand(command)
+            }
+        }
+    }
+
 }

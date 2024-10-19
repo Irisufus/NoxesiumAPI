@@ -1,10 +1,13 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    kotlin("jvm") version "2.1.0-Beta2"
+    kotlin("jvm") version "1.9.24"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("io.papermc.paperweight.userdev") version "1.7.1"
 }
 
 group = "me.iris"
-version = "1.0-SNAPSHOT"
+version = "2.0"
 
 repositories {
     mavenCentral()
@@ -21,13 +24,15 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
     compileOnly("dev.jorel:commandapi-bukkit-core:9.5.2")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("fr.skytasul:glowingentities:1.3.5")
+    implementation("fr.skytasul:glowingentities:1.3.5")
     implementation("com.noxcrew.noxesium:api:2.3.3")
     implementation("com.noxcrew.noxesium:paper:2.3.3")
-    implementation("fr.skytasul:glowingentities:1.3.5")
     implementation("dev.jorel:commandapi-bukkit-kotlin:9.5.2")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
 }
 
 val targetJavaVersion = 21
@@ -46,4 +51,31 @@ tasks.processResources {
     filesMatching("plugin.yml") {
         expand(props)
     }
+}
+
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = 21.toString()
+            freeCompilerArgs += listOf("-Xexplicit-api=strict")
+        }
+    }
+}
+
+tasks.withType<Jar> {
+    // Otherwise you'll get a "No main manifest attribute" error
+    manifest {
+        attributes["Main-Class"] = "me.iris.noxUtils.NoxUtils"
+    }
+
+    // To avoid the duplicate handling strategy error
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    // To add all of the dependencies
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
 }
