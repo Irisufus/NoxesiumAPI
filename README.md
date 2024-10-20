@@ -7,4 +7,4 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) i
 - Client-side glow for entities and blocks
 
 ## Planned updates
-- Update to Noxesium 2.4.0
+- [Update to Noxesium 2.4.0/1.21.2](https://github.com/BlockybombDEV/NoxUtils/pull/1)
