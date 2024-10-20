@@ -58,6 +58,7 @@ public class NoxUtils : JavaPlugin() {
         return instance
     }
 
+
     public fun getEntityGlow(): GlowingEntities {
         return glowingEntities
     }
