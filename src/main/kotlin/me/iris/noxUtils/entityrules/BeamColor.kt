@@ -3,14 +3,8 @@ package me.iris.noxUtils.entityrules
 import com.noxcrew.noxesium.api.protocol.rule.EntityRuleIndices
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import me.iris.noxUtils.NoxUtils
-import me.iris.noxUtils.NoxUtils.Companion.instance
-import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.entity.EnderCrystal
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
-import org.bukkit.entity.Guardian
-import org.bukkit.entity.LivingEntity
 import java.awt.Color
 import java.util.*
 
@@ -31,51 +25,10 @@ public class BeamColor {
         public val PURPLE: Optional<Color> = Optional.of(Color(100, 0, 200))
         public val PINK: Optional<Color> = Optional.of(Color.MAGENTA)
         public val WHITE: Optional<Color> = Optional.of(Color.WHITE)
-    }
-
-
-    /**
-     * Spawns a Guardian at [location] with a [color] for [duration] targeting [target]
-     */
-    public fun spawnGuardian(location: Location, target: LivingEntity, color: Optional<Color>, duration: Long) {
-        val world = location.world
-        val guardian = world.spawnEntity(location, EntityType.GUARDIAN) as Guardian
-        guardian.setGravity(false)
-        guardian.isInvisible = true
-        guardian.isInvulnerable = true
-        guardian.isPersistent = true
-        guardian.isSilent = true
-        guardian.setAI(false)
-        guardian.target = target
-        guardian.setLaser(true)
-        setBeamColor(guardian, color)
-        Bukkit.getScheduler().runTaskLater(instance, Runnable {
-            if (!guardian.isDead) {
-                resetBeamColor(guardian)
-                guardian.remove()
-            }
-        }, duration)
-    }
-
-    /**
-     * Spawns an End Crystal at [location] with a [color] for [duration] targeting [end]
-     */
-    public fun spawnEndCrystal(location: Location, end: Location, color: Optional<Color>, duration: Long) {
-        val world = location.world
-        val crystal = world.spawnEntity(location, EntityType.END_CRYSTAL) as EnderCrystal
-        crystal.setGravity(false)
-        crystal.isInvisible = true
-        crystal.isInvulnerable = true
-        crystal.isPersistent = true
-        crystal.isSilent = true
-        crystal.beamTarget = end
-        setBeamColor(crystal, color)
-        Bukkit.getScheduler().runTaskLater(instance, Runnable {
-            if (!crystal.isDead) {
-                resetBeamColor(crystal)
-                crystal.remove()
-            }
-        }, duration)
+        public val BLACK: Optional<Color> = Optional.of(Color.BLACK)
+        public val GRAY: Optional<Color> = Optional.of(Color.GRAY)
+        public val LIGHT_GRAY: Optional<Color> = Optional.of(Color.LIGHT_GRAY)
+        public val DARK_GRAY: Optional<Color> = Optional.of(Color.DARK_GRAY)
     }
 
     public fun setBeamColor(entity: Entity, color: Optional<Color>) {
