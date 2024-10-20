@@ -10,15 +10,18 @@ import dev.jorel.commandapi.kotlindsl.subcommand
 import fr.skytasul.glowingentities.GlowingBlocks
 import fr.skytasul.glowingentities.GlowingEntities
 import me.iris.noxUtils.commands.Rules
+import me.iris.noxUtils.serverrules.SetRules
 import org.bukkit.command.CommandSender
+import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-public class NoxUtils public constructor() : JavaPlugin() {
+public class NoxUtils : JavaPlugin() {
 
     public companion object {
         public val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
+        public val customCreativeItems: MutableList<ItemStack> = mutableListOf()
         public var Logger: Logger = LoggerFactory.getLogger("NoxUtils")
         public lateinit var instance: NoxUtils
         public lateinit var noxesiumManager: NoxesiumManager

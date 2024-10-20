@@ -1,13 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+group = "me.iris"
+version = "2.1.0"
+
 plugins {
     kotlin("jvm") version "1.9.24"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.papermc.paperweight.userdev") version "1.7.1"
 }
-
-group = "me.iris"
-version = "2.0"
 
 repositories {
     mavenCentral()
@@ -60,6 +60,11 @@ tasks {
             freeCompilerArgs += listOf("-Xexplicit-api=strict")
         }
     }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 tasks.withType<Jar> {

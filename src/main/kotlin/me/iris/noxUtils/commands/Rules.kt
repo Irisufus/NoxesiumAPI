@@ -5,6 +5,7 @@ import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.kotlindsl.*
+import me.iris.noxUtils.NoxUtils.Companion.customCreativeItems
 import me.iris.noxUtils.NoxUtils.Companion.noxesiumManager
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -36,7 +37,7 @@ public class Rules {
 
     public var itemStackServerRules: MutableMap<String, Int> = mutableMapOf(
         "handItemOverride" to ServerRuleIndices.HAND_ITEM_OVERRIDE,
-//        "customCreativeItems" to ServerRuleIndices.CUSTOM_CREATIVE_ITEMS, <- will be supported later or on request
+        "customCreativeItems" to ServerRuleIndices.CUSTOM_CREATIVE_ITEMS
     )
 
     public var allRules: MutableMap<String, Int> = mutableMapOf()
@@ -100,10 +101,15 @@ public class Rules {
                         val players = commandArguments["players"] as Collection<Player>
                         val value = commandArguments["value"] as ItemStack
                         var affected = 0
+                        if (rule.value == ServerRuleIndices.CUSTOM_CREATIVE_ITEMS) customCreativeItems.add(value)
                         for (player in players) {
                             if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
-                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rule.value)
-                            rule!!.value = value
+                            val rules: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rule.value)
+                            if (rule.value != ServerRuleIndices.CUSTOM_CREATIVE_ITEMS) {
+                                rules!!.value = value
+                            } else {
+                                rules!!.value = customCreativeItems
+                            }
                             affected++
                         }
                         if (sender != null) sender.sendMessage(Component.text(affected).color(NamedTextColor.DARK_GREEN).append(Component.text(" player(s) affected").color(NamedTextColor.GREEN)))

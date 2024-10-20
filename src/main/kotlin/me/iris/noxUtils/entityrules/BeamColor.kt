@@ -1,5 +1,6 @@
 package me.iris.noxUtils.entityrules
 
+import com.noxcrew.noxesium.api.protocol.rule.EntityRuleIndices
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import me.iris.noxUtils.NoxUtils
 import me.iris.noxUtils.NoxUtils.Companion.instance
@@ -58,16 +59,16 @@ public class BeamColor {
     // Will be updated to support minecraft:end_crystal once Paper 1.21.2 comes out
     private fun setBeamColor(guardian: Guardian, color: Optional<Color>) {
         // Set the beam color
-        var rule: RemoteServerRule<Any>? = entityManager.getEntityRule(guardian, 1)
+        var rule: RemoteServerRule<Any>? = entityManager.getEntityRule(guardian, EntityRuleIndices.BEAM_COLOR)
         rule!!.setValue(color)
 
         // Hide the beam bubbles
-        rule = entityManager.getEntityRule(guardian, 0)
+        rule = entityManager.getEntityRule(guardian, EntityRuleIndices.DISABLE_BUBBLES)
         rule!!.setValue(true)
     }
 
     private fun resetBeamColor(guardian: Guardian) {
-        val rule: RemoteServerRule<Any>? = entityManager.getEntityRule(guardian, 1)
+        val rule: RemoteServerRule<Any>? = entityManager.getEntityRule(guardian, EntityRuleIndices.BEAM_COLOR)
         rule!!.reset()
     }
 
