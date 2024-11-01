@@ -1,4 +1,4 @@
-package me.iris.noxUtils
+package me.iris.noxesiumapi
 
 import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices
 import com.noxcrew.noxesium.paper.api.NoxesiumManager
@@ -12,7 +12,7 @@ public class Manager(plugin: Plugin, logger: Logger) : NoxesiumManager(plugin, l
     override fun onPlayerRegistered(player: Player) {
         // Send all Qib behaviours after a player gets registered as a Noxesium user
         val rule: RemoteServerRule<Any>? = getServerRule(player, ServerRuleIndices.QIB_BEHAVIORS)
-        rule!!.value = NoxUtils.qibDefinitions
+        rule!!.value = NoxesiumAPI.qibDefinitions
         updateServerRules(player)
     }
 }

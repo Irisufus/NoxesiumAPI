@@ -1,9 +1,9 @@
-name: NoxUtils
-version: '2.1.1'
-main: me.iris.noxUtils.NoxUtils
+name: NoxesiumAPI
+version: '2.2.0'
+main: me.iris.noxesiumapi.NoxesiumAPI
 api-version: '1.21'
 authors: [ Iris ]
-description: A tool to communicate with Noxesium clients (mostly as an API for usage with Skript-Reflect)
-website: https://github.com/BlockybombDEV/NoxUtils
+description: An API to communicate with Noxesium clients
+website: https://github.com/BlockybombDEV/NoxesiumAPI
 depend:
   - CommandAPI

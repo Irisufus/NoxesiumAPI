@@ -1,12 +1,13 @@
-package me.iris.noxUtils.commands
+package me.iris.noxesiumapi.commands
 
 import com.noxcrew.noxesium.api.protocol.NoxesiumFeature
 import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.kotlindsl.*
-import me.iris.noxUtils.NoxUtils.Companion.customCreativeItems
-import me.iris.noxUtils.NoxUtils.Companion.noxesiumManager
+import me.iris.noxesiumapi.NoxesiumAPI
+import me.iris.noxesiumapi.NoxesiumAPI.Companion.customCreativeItems
+import me.iris.noxesiumapi.NoxesiumAPI.Companion.noxesiumManager
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.entity.Player
@@ -18,7 +19,7 @@ public class Rules {
         public var RuleCommands: MutableList<CommandAPICommand> = mutableListOf()
     }
 
-    public var booleanServerRules: MutableMap<String, Int> = mutableMapOf(
+    private var booleanServerRules: MutableMap<String, Int> = mutableMapOf(
         "disableSpinAttackCollision" to ServerRuleIndices.DISABLE_SPIN_ATTACK_COLLISIONS,
         "cameraLocked" to ServerRuleIndices.CAMERA_LOCKED,
         "disableVanillaMusic" to ServerRuleIndices.DISABLE_VANILLA_MUSIC,
@@ -30,17 +31,17 @@ public class Rules {
         "disableMapUi" to ServerRuleIndices.DISABLE_MAP_UI
     )
 
-    public var integerServerRules: MutableMap<String, Int> = mutableMapOf(
+    private var integerServerRules: MutableMap<String, Int> = mutableMapOf(
         "heldItemNameOffset" to ServerRuleIndices.HELD_ITEM_NAME_OFFSET,
         "riptideCoyoteTime" to ServerRuleIndices.RIPTIDE_COYOTE_TIME
     )
 
-    public var itemStackServerRules: MutableMap<String, Int> = mutableMapOf(
+    private var itemStackServerRules: MutableMap<String, Int> = mutableMapOf(
         "handItemOverride" to ServerRuleIndices.HAND_ITEM_OVERRIDE,
         "customCreativeItems" to ServerRuleIndices.CUSTOM_CREATIVE_ITEMS
     )
 
-    public var allRules: MutableMap<String, Int> = mutableMapOf()
+    private var allRules: MutableMap<String, Int> = mutableMapOf()
 
     public fun registerCommands() {
         allRules.putAll(booleanServerRules)
@@ -48,9 +49,9 @@ public class Rules {
         allRules.putAll(itemStackServerRules)
 
         // Boolean server rules
-        for (rule in booleanServerRules) {
+        for (rules in booleanServerRules) {
             RuleCommands.add(
-                subcommand(rule.key) {
+                subcommand(rules.key) {
                     entitySelectorArgumentManyPlayers("players", false, false)
                     booleanArgument("enabled", false)
                     playerExecutor { sender, commandArguments ->
@@ -59,7 +60,7 @@ public class Rules {
                         var affected = 0
                         for (player in players) {
                             if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
-                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rule.value)
+                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rules.value)
                             rule!!.value = value
                             affected++
                         }
@@ -70,9 +71,9 @@ public class Rules {
         }
 
         // Integer server rules
-        for (rule in integerServerRules) {
+        for (rules in integerServerRules) {
             RuleCommands.add(
-                subcommand(rule.key) {
+                subcommand(rules.key) {
                     entitySelectorArgumentManyPlayers("players", false, false)
                     integerArgument("value")
                     playerExecutor { sender, commandArguments ->
@@ -81,7 +82,7 @@ public class Rules {
                         var affected = 0
                         for (player in players) {
                             if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
-                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rule.value)
+                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rules.value)
                             rule!!.value = value
                             affected++
                         }
@@ -127,8 +128,8 @@ public class Rules {
                     var affected = 0
                     for (player in players) {
                         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
-                        for (rule in allRules) {
-                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rule.value)
+                        for (rules in allRules) {
+                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rules.value)
                             rule!!.reset()
                             affected++
                         }
@@ -137,6 +138,8 @@ public class Rules {
                 }
             }
         )
+
+        NoxesiumAPI.Logger.info("Creating subcommands...")
 
     }
 

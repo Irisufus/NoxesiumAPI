@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "me.iris"
-version = "2.1.1"
+version = "2.2.0"
 
 plugins {
     kotlin("jvm") version "1.9.24"
@@ -24,13 +24,12 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
-    compileOnly("dev.jorel:commandapi-bukkit-core:9.5.2")
+    paperweight.paperDevBundle("1.21.3-R0.1-SNAPSHOT")
+    compileOnly("dev.jorel:commandapi-bukkit-core:9.6.1")
     implementation("fr.skytasul:glowingentities:1.3.5")
-    implementation("fr.skytasul:glowingentities:1.3.5")
-    implementation("com.noxcrew.noxesium:api:2.3.3")
-    implementation("com.noxcrew.noxesium:paper:2.3.3")
-    implementation("dev.jorel:commandapi-bukkit-kotlin:9.5.2")
+    implementation("com.noxcrew.noxesium:api:2.4.1")
+    implementation("com.noxcrew.noxesium:paper:2.4.1")
+    implementation("dev.jorel:commandapi-bukkit-kotlin:9.6.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
 }
@@ -70,7 +69,7 @@ java {
 tasks.withType<Jar> {
     // Otherwise you'll get a "No main manifest attribute" error
     manifest {
-        attributes["Main-Class"] = "me.iris.noxUtils.NoxUtils"
+        attributes["Main-Class"] = "me.iris.noxesiumapi.NoxesiumAPI"
     }
 
     // To avoid the duplicate handling strategy error
