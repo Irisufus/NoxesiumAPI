@@ -1,7 +1,6 @@
 package me.iris.noxUtils.serverrules
 
 import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices
-import com.noxcrew.noxesium.paper.api.rule.GraphicsType
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import me.iris.noxUtils.NoxUtils
 import org.bukkit.entity.Player

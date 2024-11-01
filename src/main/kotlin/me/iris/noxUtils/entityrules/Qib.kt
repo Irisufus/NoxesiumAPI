@@ -9,7 +9,6 @@ import me.iris.noxUtils.NoxUtils
 import me.iris.noxUtils.NoxUtils.Companion.qibDefinitions
 import org.bukkit.entity.Interaction
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 
 public class Qib {
     // Qibs are only usable on minecraft:interaction entities
