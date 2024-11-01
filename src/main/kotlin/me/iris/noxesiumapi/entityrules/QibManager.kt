@@ -1,19 +1,19 @@
-package me.iris.noxUtils.entityrules
+package me.iris.noxesiumapi.entityrules
 
 import com.noxcrew.noxesium.api.protocol.rule.EntityRuleIndices
 import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices
 import com.noxcrew.noxesium.api.qib.QibDefinition
 import com.noxcrew.noxesium.api.qib.QibEffect
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
-import me.iris.noxUtils.NoxUtils
-import me.iris.noxUtils.NoxUtils.Companion.qibDefinitions
+import me.iris.noxesiumapi.NoxesiumAPI.Companion.qibDefinitions
+import me.iris.noxesiumapi.NoxesiumAPI
 import org.bukkit.entity.Interaction
 import org.bukkit.entity.Player
 
-public class Qib {
+public class QibManager {
     // Qibs are only usable on minecraft:interaction entities
-    private val manager = NoxUtils.noxesiumManager
-    private val entityManager = NoxUtils.entityRuleManager
+    private val manager = NoxesiumAPI.noxesiumManager
+    private val entityManager = NoxesiumAPI.entityRuleManager
 
     /**
      * Define and add a definition to list of Qib definitions
