@@ -48,9 +48,9 @@ public class Rules {
         allRules.putAll(itemStackServerRules)
 
         // Boolean server rules
-        for (rule in booleanServerRules) {
+        for (rules in booleanServerRules) {
             RuleCommands.add(
-                subcommand(rule.key) {
+                subcommand(rules.key) {
                     entitySelectorArgumentManyPlayers("players", false, false)
                     booleanArgument("enabled", false)
                     playerExecutor { sender, commandArguments ->
@@ -59,7 +59,7 @@ public class Rules {
                         var affected = 0
                         for (player in players) {
                             if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
-                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rule.value)
+                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rules.value)
                             rule!!.value = value
                             affected++
                         }
@@ -70,9 +70,9 @@ public class Rules {
         }
 
         // Integer server rules
-        for (rule in integerServerRules) {
+        for (rules in integerServerRules) {
             RuleCommands.add(
-                subcommand(rule.key) {
+                subcommand(rules.key) {
                     entitySelectorArgumentManyPlayers("players", false, false)
                     integerArgument("value")
                     playerExecutor { sender, commandArguments ->
@@ -81,7 +81,7 @@ public class Rules {
                         var affected = 0
                         for (player in players) {
                             if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
-                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rule.value)
+                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rules.value)
                             rule!!.value = value
                             affected++
                         }
@@ -127,8 +127,8 @@ public class Rules {
                     var affected = 0
                     for (player in players) {
                         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
-                        for (rule in allRules) {
-                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rule.value)
+                        for (rules in allRules) {
+                            val rule: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rules.value)
                             rule!!.reset()
                             affected++
                         }

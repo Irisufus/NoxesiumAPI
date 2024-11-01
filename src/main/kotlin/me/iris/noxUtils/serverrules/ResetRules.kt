@@ -83,7 +83,7 @@ public class ResetRules(private val player: Player) {
         manager.updateServerRules(player)
     }
 
-    public fun overrideGraphicsMode(value: GraphicsType) {
+    public fun overrideGraphicsMode() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.OVERRIDE_GRAPHICS_MODE)
 
         rule!!.reset()

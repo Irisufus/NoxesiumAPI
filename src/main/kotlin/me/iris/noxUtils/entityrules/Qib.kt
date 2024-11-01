@@ -37,7 +37,7 @@ public class Qib {
     public fun sendDefinitions(player: Player) {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.QIB_BEHAVIORS)
         rule!!.reset()
-        rule!!.value = qibDefinitions
+        rule.value = qibDefinitions
         manager.updateServerRules(player)
 
     }
