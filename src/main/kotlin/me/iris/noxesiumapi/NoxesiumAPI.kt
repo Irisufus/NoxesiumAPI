@@ -1,4 +1,4 @@
-package me.iris.noxUtils
+package me.iris.noxesiumapi
 
 import com.noxcrew.noxesium.api.qib.QibDefinition
 import com.noxcrew.noxesium.paper.api.EntityRuleManager
@@ -9,20 +9,20 @@ import dev.jorel.commandapi.kotlindsl.commandAPICommand
 import dev.jorel.commandapi.kotlindsl.subcommand
 import fr.skytasul.glowingentities.GlowingBlocks
 import fr.skytasul.glowingentities.GlowingEntities
-import me.iris.noxUtils.commands.Rules
+import me.iris.noxesiumapi.commands.Rules
 import org.bukkit.command.CommandSender
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-public class NoxUtils : JavaPlugin() {
+public class NoxesiumAPI : JavaPlugin() {
 
     public companion object {
         public val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
         public val customCreativeItems: MutableList<ItemStack> = mutableListOf()
-        public var Logger: Logger = LoggerFactory.getLogger("NoxUtils")
-        public lateinit var instance: NoxUtils
+        public var Logger: Logger = LoggerFactory.getLogger("NoxesiumAPI")
+        public lateinit var instance: NoxesiumAPI
         public lateinit var noxesiumManager: NoxesiumManager
         public lateinit var entityRuleManager: EntityRuleManager
         public lateinit var glowingEntities: GlowingEntities
@@ -51,10 +51,10 @@ public class NoxUtils : JavaPlugin() {
         ServerRules(noxesiumManager)
         EntityRules(noxesiumManager)
 
-        Logger.info("NoxUtils has been enabled!")
+        Logger.info("NoxesiumAPI has been enabled!")
     }
 
-    public fun getInstance(): NoxUtils {
+    public fun getInstance(): NoxesiumAPI {
         return instance
     }
 
@@ -79,12 +79,13 @@ public class NoxUtils : JavaPlugin() {
 
     private fun registerCommands() {
         Rules().registerCommands()
-        commandAPICommand("serverrules", "noxutils") {
-            withRequirement {sender: CommandSender -> sender.isOp}
+        commandAPICommand("serverrules", "noxesiumapi") {
+            withRequirement { sender: CommandSender -> sender.isOp }
             for (command in Rules.RuleCommands) {
                 subcommand(command)
             }
         }
+        Logger.info("/serverrules command loaded!")
     }
 
 }

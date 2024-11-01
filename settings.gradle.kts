@@ -1,1 +1,1 @@
-rootProject.name = "NoxUtils"
+rootProject.name = "NoxesiumAPI"

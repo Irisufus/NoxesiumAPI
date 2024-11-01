@@ -1,12 +1,13 @@
-package me.iris.noxUtils.commands
+package me.iris.noxesiumapi.commands
 
 import com.noxcrew.noxesium.api.protocol.NoxesiumFeature
 import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.kotlindsl.*
-import me.iris.noxUtils.NoxUtils.Companion.customCreativeItems
-import me.iris.noxUtils.NoxUtils.Companion.noxesiumManager
+import me.iris.noxesiumapi.NoxesiumAPI
+import me.iris.noxesiumapi.NoxesiumAPI.Companion.customCreativeItems
+import me.iris.noxesiumapi.NoxesiumAPI.Companion.noxesiumManager
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.entity.Player
@@ -137,6 +138,8 @@ public class Rules {
                 }
             }
         )
+
+        NoxesiumAPI.Logger.info("Creating subcommands...")
 
     }
 

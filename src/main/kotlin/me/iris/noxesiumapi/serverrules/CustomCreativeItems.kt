@@ -1,8 +1,7 @@
-package me.iris.noxUtils.serverrules
+package me.iris.noxesiumapi.serverrules
 
-import me.iris.noxUtils.NoxUtils.Companion.customCreativeItems
+import me.iris.noxesiumapi.NoxesiumAPI.Companion.customCreativeItems
 import org.bukkit.Bukkit
-import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 /**

@@ -69,7 +69,7 @@ java {
 tasks.withType<Jar> {
     // Otherwise you'll get a "No main manifest attribute" error
     manifest {
-        attributes["Main-Class"] = "me.iris.noxUtils.NoxUtils"
+        attributes["Main-Class"] = "me.iris.noxesiumapi.NoxesiumAPI"
     }
 
     // To avoid the duplicate handling strategy error

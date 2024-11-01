@@ -1,8 +1,8 @@
-package me.iris.noxUtils.entityrules
+package me.iris.noxesiumapi.entityrules
 
 import com.noxcrew.noxesium.api.protocol.rule.EntityRuleIndices
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
-import me.iris.noxUtils.NoxUtils
+import me.iris.noxesiumapi.NoxesiumAPI
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Guardian
@@ -12,7 +12,7 @@ import java.util.*
 
 public class BeamColor {
     // Only works for minecraft:guardian, minecraft:elder_guardian and minecraft:end_crystal
-    private val entityManager = NoxUtils.entityRuleManager
+    private val entityManager = NoxesiumAPI.entityRuleManager
 
     // Preset colors for Skript
     public companion object {
