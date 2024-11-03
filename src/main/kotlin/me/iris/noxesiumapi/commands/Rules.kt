@@ -44,6 +44,7 @@ public class Rules {
     private var allRules: MutableMap<String, Int> = mutableMapOf()
 
     public fun registerCommands() {
+        NoxesiumAPI.Logger.info("Creating server rules subcommands...")
         allRules.putAll(booleanServerRules)
         allRules.putAll(integerServerRules)
         allRules.putAll(itemStackServerRules)
@@ -64,7 +65,13 @@ public class Rules {
                             rule!!.value = value
                             affected++
                         }
-                        if (sender != null) sender.sendMessage(Component.text(affected).color(NamedTextColor.DARK_GREEN).append(Component.text(" player(s) affected").color(NamedTextColor.GREEN)))
+                        sender.sendMessage(
+                            Component.text(affected)
+                                .color(NamedTextColor.DARK_GREEN)
+                                .append(Component.text(" player(s) affected")
+                                    .color(NamedTextColor.GREEN)
+                                )
+                        )
                     }
                 }
             )
@@ -86,7 +93,13 @@ public class Rules {
                             rule!!.value = value
                             affected++
                         }
-                        if (sender != null) sender.sendMessage(Component.text(affected).color(NamedTextColor.DARK_GREEN).append(Component.text(" player(s) affected").color(NamedTextColor.GREEN)))
+                        sender.sendMessage(
+                            Component.text(affected)
+                                .color(NamedTextColor.DARK_GREEN)
+                                .append(Component.text(" player(s) affected")
+                                    .color(NamedTextColor.GREEN)
+                                )
+                        )
                     }
                 }
             )
@@ -113,7 +126,13 @@ public class Rules {
                             }
                             affected++
                         }
-                        if (sender != null) sender.sendMessage(Component.text(affected).color(NamedTextColor.DARK_GREEN).append(Component.text(" player(s) affected").color(NamedTextColor.GREEN)))
+                        sender.sendMessage(
+                            Component.text(affected)
+                                .color(NamedTextColor.DARK_GREEN)
+                                .append(Component.text(" player(s) affected")
+                                    .color(NamedTextColor.GREEN)
+                                )
+                        )
                     }
                 }
             )
@@ -134,12 +153,18 @@ public class Rules {
                             affected++
                         }
                     }
-                    if (sender != null) sender.sendMessage(Component.text(affected).color(NamedTextColor.DARK_GREEN).append(Component.text(" player(s) affected").color(NamedTextColor.GREEN)))
+                    sender.sendMessage(
+                        Component.text(affected)
+                            .color(NamedTextColor.DARK_GREEN)
+                            .append(Component.text(" player(s) affected")
+                                .color(NamedTextColor.GREEN)
+                            )
+                    )
                 }
             }
         )
 
-        NoxesiumAPI.Logger.info("Creating subcommands...")
+        NoxesiumAPI.Logger.info("Created server rules subcommands!")
 
     }
 
