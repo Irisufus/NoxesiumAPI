@@ -65,13 +65,7 @@ public class Rules {
                             rule!!.value = value
                             affected++
                         }
-                        sender.sendMessage(
-                            Component.text(affected)
-                                .color(NamedTextColor.DARK_GREEN)
-                                .append(Component.text(" player(s) affected")
-                                    .color(NamedTextColor.GREEN)
-                                )
-                        )
+                        sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                     }
                 }
             )
@@ -93,13 +87,7 @@ public class Rules {
                             rule!!.value = value
                             affected++
                         }
-                        sender.sendMessage(
-                            Component.text(affected)
-                                .color(NamedTextColor.DARK_GREEN)
-                                .append(Component.text(" player(s) affected")
-                                    .color(NamedTextColor.GREEN)
-                                )
-                        )
+                        sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                     }
                 }
             )
@@ -126,13 +114,7 @@ public class Rules {
                             }
                             affected++
                         }
-                        sender.sendMessage(
-                            Component.text(affected)
-                                .color(NamedTextColor.DARK_GREEN)
-                                .append(Component.text(" player(s) affected")
-                                    .color(NamedTextColor.GREEN)
-                                )
-                        )
+                        sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                     }
                 }
             )
@@ -153,13 +135,7 @@ public class Rules {
                             affected++
                         }
                     }
-                    sender.sendMessage(
-                        Component.text(affected)
-                            .color(NamedTextColor.DARK_GREEN)
-                            .append(Component.text(" player(s) affected")
-                                .color(NamedTextColor.GREEN)
-                            )
-                    )
+                    sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                 }
             }
         )

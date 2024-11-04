@@ -46,24 +46,14 @@ public class Sound {
                 var source: SoundSource
                 source = SoundSource.valueOf(sourceArg.uppercase())
                 if (soundManager.getSound(id) == null) {
-                    sender.sendMessage(
-                        Component.text("No sound was registered for id $id")
-                            .color(NamedTextColor.RED)
-                    )
+                    sender.sendRichMessage("<red>No sound was registered at id <dark_red>$id")
                 } else {
                     for (player in players) {
                         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
                         soundManager.playSound(player, id, source, false, false, ignore, volume, pitch, Vector3f())
                         affected++
                     }
-                    sender.sendMessage(
-                        Component.text(affected)
-                            .color(NamedTextColor.DARK_GREEN)
-                            .append(
-                                Component.text(" player(s) affected")
-                                    .color(NamedTextColor.GREEN)
-                            )
-                    )
+                    sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                 }
             }
         }
@@ -90,24 +80,14 @@ public class Sound {
                 var source: SoundSource
                 source = SoundSource.valueOf(sourceArg.uppercase())
                 if (soundManager.getSound(id) == null) {
-                    sender.sendMessage(
-                        Component.text("No sound was registered for id $id")
-                            .color(NamedTextColor.RED)
-                    )
+                    sender.sendRichMessage("<red>No sound was registered at id <dark_red>$id")
                 } else {
                     for (player in players) {
                         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
                         soundManager.playSound(player, id, source, true, false, ignore, volume, pitch, Vector3f())
                         affected++
                     }
-                    sender.sendMessage(
-                        Component.text(affected)
-                            .color(NamedTextColor.DARK_GREEN)
-                            .append(
-                                Component.text(" player(s) affected")
-                                    .color(NamedTextColor.GREEN)
-                            )
-                    )
+                    sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                 }
             }
         }
@@ -128,24 +108,14 @@ public class Sound {
                 val startVolume: Float? = commandArguments["startvolume"] as Float?
                 var affected = 0
                 if (soundManager.getSound(id) == null) {
-                    sender.sendMessage(
-                        Component.text("No sound was registered for id $id")
-                            .color(NamedTextColor.RED)
-                    )
+                    sender.sendRichMessage("<red>No sound was registered at id <dark_red>$id")
                 } else {
                     for (player in players) {
                         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
                         soundManager.modifySound(player, id, volume, interpolation, startVolume)
                         affected++
                     }
-                    sender.sendMessage(
-                        Component.text(affected)
-                            .color(NamedTextColor.DARK_GREEN)
-                            .append(
-                                Component.text(" player(s) affected")
-                                    .color(NamedTextColor.GREEN)
-                            )
-                    )
+                    sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                 }
             }
         }
@@ -160,24 +130,14 @@ public class Sound {
                 val id = commandArguments["id"] as Int
                 var affected = 0
                 if (soundManager.getSound(id) == null) {
-                    sender.sendMessage(
-                        Component.text("No sound was registered for id $id")
-                            .color(NamedTextColor.RED)
-                    )
+                    sender.sendRichMessage("<red>No sound was registered at id <dark_red>$id")
                 } else {
                     for (player in players) {
                         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
                         soundManager.stopSound(player, id)
                         affected++
                     }
-                    sender.sendMessage(
-                        Component.text(affected)
-                            .color(NamedTextColor.DARK_GREEN)
-                            .append(
-                                Component.text(" player(s) affected")
-                                    .color(NamedTextColor.GREEN)
-                            )
-                    )
+                    sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                 }
             }
         }
@@ -191,22 +151,13 @@ public class Sound {
                 val parsedSound = tryBySeparator(sound.asString(), ':')
                 if (parsedSound != null) {
                     if (soundManager.getSounds().containsValue(parsedSound)) {
-                        sender.sendMessage(
-                            Component.text("This sound was already registered")
-                                .color(NamedTextColor.RED)
-                        )
+                        sender.sendRichMessage("<red>This sound was already registered")
                     } else {
                         val result = soundManager.addSound(parsedSound)
-                        sender.sendMessage(
-                            Component.text("Added ${sound.asString()} at id $result")
-                                .color(NamedTextColor.GREEN)
-                        )
+                        sender.sendRichMessage("<green>Added <dark_green>${sound.asString()}<green> at id <dark_green>$result")
                     }
                 } else {
-                    sender.sendMessage(
-                        Component.text("There was an error parsing sound!")
-                            .color(NamedTextColor.RED)
-                    )
+                    sender.sendRichMessage("<red>There was an error parsing the sound!")
                 }
             }
         }
@@ -219,17 +170,11 @@ public class Sound {
                 val id = commandArguments["id"] as Int
                 val sound: ResourceLocation? = soundManager.getSound(id)
                 if (sound == null) {
-                    sender.sendMessage(
-                        Component.text("No sound was registered for id $id")
-                            .color(NamedTextColor.RED)
-                    )
+                    sender.sendRichMessage("<red>No sound was registered at id <dark_red>$id")
                 } else {
 
                     soundManager.removeSound(id)
-                    sender.sendMessage(
-                        Component.text("Removed sound $sound")
-                            .color(NamedTextColor.GREEN)
-                    )
+                    sender.sendRichMessage("<green>Removed sound <dark_green>$sound <green>from id <dark_green>$id")
                 }
             }
         }
@@ -243,7 +188,7 @@ public class Sound {
                         sender.sendRichMessage("<aqua>Id: <blue>$id <aqua>Sound: <blue>$sound")
                     }
                 } else {
-                    sender.sendRichMessage("<red>No sounds have been registered! Use '/noxesiumapi sound add' to add one.")
+                    sender.sendRichMessage("<red>No sounds have been registered! Use <dark_red>'/noxesiumapi sound add'<red> to add one.")
                 }
             }
         }
