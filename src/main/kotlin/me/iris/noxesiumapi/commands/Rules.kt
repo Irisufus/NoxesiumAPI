@@ -6,10 +6,8 @@ import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.kotlindsl.*
 import me.iris.noxesiumapi.NoxesiumAPI
-import me.iris.noxesiumapi.NoxesiumAPI.Companion.customCreativeItems
+import me.iris.noxesiumapi.NoxesiumAPI.Companion.creativeItemsManager
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.noxesiumManager
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -44,6 +42,7 @@ public class Rules {
     private var allRules: MutableMap<String, Int> = mutableMapOf()
 
     public fun registerCommands() {
+        NoxesiumAPI.Logger.info("Creating server rules subcommands...")
         allRules.putAll(booleanServerRules)
         allRules.putAll(integerServerRules)
         allRules.putAll(itemStackServerRules)
@@ -64,7 +63,7 @@ public class Rules {
                             rule!!.value = value
                             affected++
                         }
-                        if (sender != null) sender.sendMessage(Component.text(affected).color(NamedTextColor.DARK_GREEN).append(Component.text(" player(s) affected").color(NamedTextColor.GREEN)))
+                        sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                     }
                 }
             )
@@ -86,7 +85,7 @@ public class Rules {
                             rule!!.value = value
                             affected++
                         }
-                        if (sender != null) sender.sendMessage(Component.text(affected).color(NamedTextColor.DARK_GREEN).append(Component.text(" player(s) affected").color(NamedTextColor.GREEN)))
+                        sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                     }
                 }
             )
@@ -102,18 +101,26 @@ public class Rules {
                         val players = commandArguments["players"] as Collection<Player>
                         val value = commandArguments["value"] as ItemStack
                         var affected = 0
-                        if (rule.value == ServerRuleIndices.CUSTOM_CREATIVE_ITEMS) customCreativeItems.add(value)
+                        if (rule.value == ServerRuleIndices.CUSTOM_CREATIVE_ITEMS) {
+                            if (!creativeItemsManager.list().contains(value)) {
+                                creativeItemsManager.addItem(value)
+                            } else {
+                                sender.sendRichMessage("<red>This item has already been added!")
+                                return@playerExecutor
+                            }
+                        }
                         for (player in players) {
                             if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
                             val rules: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rule.value)
                             if (rule.value != ServerRuleIndices.CUSTOM_CREATIVE_ITEMS) {
                                 rules!!.value = value
                             } else {
-                                rules!!.value = customCreativeItems
+                                rules!!.value = creativeItemsManager.list()
+                                creativeItemsManager.update()
                             }
                             affected++
                         }
-                        if (sender != null) sender.sendMessage(Component.text(affected).color(NamedTextColor.DARK_GREEN).append(Component.text(" player(s) affected").color(NamedTextColor.GREEN)))
+                        sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                     }
                 }
             )
@@ -134,12 +141,12 @@ public class Rules {
                             affected++
                         }
                     }
-                    if (sender != null) sender.sendMessage(Component.text(affected).color(NamedTextColor.DARK_GREEN).append(Component.text(" player(s) affected").color(NamedTextColor.GREEN)))
+                    sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
                 }
             }
         )
 
-        NoxesiumAPI.Logger.info("Creating subcommands...")
+        NoxesiumAPI.Logger.info("Created server rules subcommands!")
 
     }
 

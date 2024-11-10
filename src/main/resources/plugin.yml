@@ -1,9 +1,7 @@
 name: NoxesiumAPI
-version: '2.2.0'
+version: '2.2.1'
 main: me.iris.noxesiumapi.NoxesiumAPI
 api-version: '1.21'
 authors: [ Iris ]
 description: An API to communicate with Noxesium clients
 website: https://github.com/BlockybombDEV/NoxesiumAPI
-depend:
-  - CommandAPI

@@ -4,6 +4,7 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) i
 ## Features
 - Setting server/entity rules
 - Qib system
+- Custom sound system
 - Client-side glow for entities and blocks
 
 ## Requirements
