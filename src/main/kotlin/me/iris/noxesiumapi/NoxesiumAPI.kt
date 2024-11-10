@@ -9,11 +9,12 @@ import dev.jorel.commandapi.kotlindsl.commandAPICommand
 import dev.jorel.commandapi.kotlindsl.subcommand
 import fr.skytasul.glowingentities.GlowingBlocks
 import fr.skytasul.glowingentities.GlowingEntities
+import me.iris.noxesiumapi.commands.CreativeItems
 import me.iris.noxesiumapi.commands.Rules
 import me.iris.noxesiumapi.commands.Sound
+import me.iris.noxesiumapi.serverrules.CreativeItemsManager
 import me.iris.noxesiumapi.util.SoundManager
 import org.bukkit.command.CommandSender
-import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -22,19 +23,15 @@ public class NoxesiumAPI : JavaPlugin() {
 
     public companion object {
         public val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
-        public val customCreativeItems: MutableList<ItemStack> = mutableListOf()
         public var Logger: Logger = LoggerFactory.getLogger("NoxesiumAPI")
         public lateinit var instance: NoxesiumAPI
         public lateinit var noxesiumManager: NoxesiumManager
         public lateinit var entityRuleManager: EntityRuleManager
         public lateinit var soundManager: SoundManager
+        public lateinit var creativeItemsManager: CreativeItemsManager
         public lateinit var glowingEntities: GlowingEntities
         public lateinit var glowingBlocks: GlowingBlocks
 
-    }
-
-    override fun onLoad() {
-//        registerCommands()
     }
 
     override fun onEnable() {
@@ -49,7 +46,8 @@ public class NoxesiumAPI : JavaPlugin() {
         noxesiumManager.register()
         entityRuleManager = EntityRuleManager(noxesiumManager)
         entityRuleManager.register()
-        soundManager = SoundManager()
+        soundManager = SoundManager(noxesiumManager)
+        creativeItemsManager = CreativeItemsManager()
 
         // Registers all rules
         ServerRules(noxesiumManager)
@@ -76,8 +74,12 @@ public class NoxesiumAPI : JavaPlugin() {
         return noxesiumManager
     }
 
-    public fun getSoundManger(): SoundManager {
+    public fun getSoundManager(): SoundManager {
         return soundManager
+    }
+
+    public fun getCreativeItemsManager(): CreativeItemsManager {
+        return creativeItemsManager
     }
 
     override fun onDisable() {
@@ -89,6 +91,7 @@ public class NoxesiumAPI : JavaPlugin() {
     private fun registerCommands() {
         Rules().registerCommands()
         Sound().registerCommands()
+        CreativeItems().registerCommands()
         val rules = subcommand("serverrules") {
             for (command in Rules.RuleCommands) {
                 subcommand(command)
@@ -99,10 +102,16 @@ public class NoxesiumAPI : JavaPlugin() {
                 subcommand(command)
             }
         }
+        val creativeItems = subcommand("creativeItems") {
+            for (command in CreativeItems.creativeItemsCommands) {
+                subcommand(command)
+            }
+        }
         commandAPICommand("noxesiumapi", "noxesiumapi") {
             withRequirement { sender: CommandSender -> sender.isOp }
             subcommand(rules)
             subcommand(sound)
+            subcommand(creativeItems)
         }
         Logger.info("/noxesiumapi command loaded!")
     }

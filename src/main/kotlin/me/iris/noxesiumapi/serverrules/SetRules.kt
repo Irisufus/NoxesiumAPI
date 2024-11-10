@@ -4,7 +4,7 @@ import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices
 import com.noxcrew.noxesium.paper.api.rule.GraphicsType
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import me.iris.noxesiumapi.NoxesiumAPI
-import me.iris.noxesiumapi.NoxesiumAPI.Companion.customCreativeItems
+import me.iris.noxesiumapi.NoxesiumAPI.Companion.creativeItemsManager
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -81,7 +81,9 @@ public open class SetRules(private val player: Player) {
     public fun customCreativeItems() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.CUSTOM_CREATIVE_ITEMS)
 
-        rule!!.setValue(customCreativeItems)
+        // Reset rule because I have no clue how to use ClientboundChangeServerRulePacket
+        rule!!.reset()
+        rule.setValue(creativeItemsManager.list())
         manager.updateServerRules(player)
     }
 

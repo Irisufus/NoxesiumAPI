@@ -6,10 +6,8 @@ import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.kotlindsl.*
 import me.iris.noxesiumapi.NoxesiumAPI
-import me.iris.noxesiumapi.NoxesiumAPI.Companion.customCreativeItems
+import me.iris.noxesiumapi.NoxesiumAPI.Companion.creativeItemsManager
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.noxesiumManager
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -103,14 +101,22 @@ public class Rules {
                         val players = commandArguments["players"] as Collection<Player>
                         val value = commandArguments["value"] as ItemStack
                         var affected = 0
-                        if (rule.value == ServerRuleIndices.CUSTOM_CREATIVE_ITEMS) customCreativeItems.add(value)
+                        if (rule.value == ServerRuleIndices.CUSTOM_CREATIVE_ITEMS) {
+                            if (!creativeItemsManager.list().contains(value)) {
+                                creativeItemsManager.addItem(value)
+                            } else {
+                                sender.sendRichMessage("<red>This item has already been added!")
+                                return@playerExecutor
+                            }
+                        }
                         for (player in players) {
                             if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
                             val rules: RemoteServerRule<Any>? = noxesiumManager.getServerRule(player, rule.value)
                             if (rule.value != ServerRuleIndices.CUSTOM_CREATIVE_ITEMS) {
                                 rules!!.value = value
                             } else {
-                                rules!!.value = customCreativeItems
+                                rules!!.value = creativeItemsManager.list()
+                                creativeItemsManager.update()
                             }
                             affected++
                         }

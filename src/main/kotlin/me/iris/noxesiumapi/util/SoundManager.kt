@@ -1,18 +1,17 @@
 package me.iris.noxesiumapi.util
 
+import com.noxcrew.noxesium.paper.api.NoxesiumManager
 import com.noxcrew.noxesium.paper.api.network.clientbound.ClientboundCustomSoundModifyPacket
 import com.noxcrew.noxesium.paper.api.network.clientbound.ClientboundCustomSoundStartPacket
 import com.noxcrew.noxesium.paper.api.network.clientbound.ClientboundCustomSoundStopPacket
-import me.iris.noxesiumapi.NoxesiumAPI
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundSource
 import org.bukkit.entity.Player
 import org.joml.Vector3f
 
-public class SoundManager {
+public class SoundManager(private val manager: NoxesiumManager) {
 
     private val sounds: MutableMap<Int, ResourceLocation> = mutableMapOf()
-    private val manager = NoxesiumAPI.noxesiumManager
 
     public fun addSound(sound: ResourceLocation): Int {
         val size = sounds.size.inc()

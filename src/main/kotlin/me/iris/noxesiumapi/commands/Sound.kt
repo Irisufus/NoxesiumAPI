@@ -9,8 +9,6 @@ import dev.jorel.commandapi.kotlindsl.*
 import me.iris.noxesiumapi.NoxesiumAPI
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.Logger
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.noxesiumManager
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.resources.ResourceLocation.tryBySeparator
 import net.minecraft.sounds.SoundSource
@@ -43,8 +41,7 @@ public class Sound {
                 val volume: Float = commandArguments["volume"] as Float? ?: 1F
                 val pitch: Float = commandArguments["pitch"] as Float? ?: 1F
                 var affected = 0
-                var source: SoundSource
-                source = SoundSource.valueOf(sourceArg.uppercase())
+                val source: SoundSource = SoundSource.valueOf(sourceArg.uppercase())
                 if (soundManager.getSound(id) == null) {
                     sender.sendRichMessage("<red>No sound was registered at id <dark_red>$id")
                 } else {
@@ -77,8 +74,7 @@ public class Sound {
                 val volume: Float = commandArguments["volume"] as Float? ?: 1F
                 val pitch: Float = commandArguments["pitch"] as Float? ?: 1F
                 var affected = 0
-                var source: SoundSource
-                source = SoundSource.valueOf(sourceArg.uppercase())
+                val source: SoundSource = SoundSource.valueOf(sourceArg.uppercase())
                 if (soundManager.getSound(id) == null) {
                     sender.sendRichMessage("<red>No sound was registered at id <dark_red>$id")
                 } else {
@@ -184,7 +180,7 @@ public class Sound {
         return subcommand("list") {
             playerExecutor { sender, _ ->
                 if (soundManager.getSounds().isNotEmpty()) {
-                    soundManager.getSounds().forEach { id, sound ->
+                    soundManager.getSounds().forEach { (id, sound) ->
                         sender.sendRichMessage("<aqua>Id: <blue>$id <aqua>Sound: <blue>$sound")
                     }
                 } else {
