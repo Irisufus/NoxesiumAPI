@@ -5,5 +5,3 @@ api-version: '1.21'
 authors: [ Iris ]
 description: An API to communicate with Noxesium clients
 website: https://github.com/BlockybombDEV/NoxesiumAPI
-depend:
-  - CommandAPI

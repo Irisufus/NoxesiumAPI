@@ -14,6 +14,7 @@ import me.iris.noxesiumapi.commands.Rules
 import me.iris.noxesiumapi.commands.Sound
 import me.iris.noxesiumapi.serverrules.CreativeItemsManager
 import me.iris.noxesiumapi.util.SoundManager
+import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
@@ -53,7 +54,12 @@ public class NoxesiumAPI : JavaPlugin() {
         ServerRules(noxesiumManager)
         EntityRules(noxesiumManager)
 
-        registerCommands()
+        if (Bukkit.getPluginManager().getPlugin("CommandAPI")?.isEnabled == true) {
+            Logger.info("CommandAPI found! Attempting to load commands.")
+            registerCommands()
+        } else {
+            Logger.warn("Could not find CommandAPI! Commands will not be loaded.")
+        }
 
         Logger.info("NoxesiumAPI has been enabled!")
     }
