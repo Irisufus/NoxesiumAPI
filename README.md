@@ -12,7 +12,7 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) i
 - CommandAPI
 
 ## Planned updates
-- Nothing. Yay!
+- Noxesium events
 
 ## Credits
 - [Noxesium by Noxcrew](https://github.com/Noxcrew/noxesium) - Noxesium lol
