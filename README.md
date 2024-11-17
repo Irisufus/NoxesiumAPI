@@ -4,6 +4,7 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) i
 ## Features
 - Setting server/entity rules
 - Qib system
+- Noxesium specific events
 - Custom sound system
 - Client-side glow for entities and blocks
 
@@ -12,7 +13,7 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) i
 - CommandAPI
 
 ## Planned updates
-- Noxesium events
+- Nothing. Yay!
 
 ## Credits
 - [Noxesium by Noxcrew](https://github.com/Noxcrew/noxesium) - Noxesium lol
