@@ -3,6 +3,8 @@ package me.iris.noxesiumapi
 import com.noxcrew.noxesium.api.qib.QibDefinition
 import com.noxcrew.noxesium.paper.api.EntityRuleManager
 import com.noxcrew.noxesium.paper.api.NoxesiumManager
+import com.noxcrew.noxesium.paper.api.network.NoxesiumPacket
+import com.noxcrew.noxesium.paper.api.network.NoxesiumPackets
 import com.noxcrew.noxesium.paper.api.rule.EntityRules
 import com.noxcrew.noxesium.paper.api.rule.ServerRules
 import dev.jorel.commandapi.kotlindsl.commandAPICommand
@@ -12,6 +14,8 @@ import fr.skytasul.glowingentities.GlowingEntities
 import me.iris.noxesiumapi.commands.CreativeItems
 import me.iris.noxesiumapi.commands.Rules
 import me.iris.noxesiumapi.commands.Sound
+import me.iris.noxesiumapi.event.NoxesiumPlayerReadyEvent
+import me.iris.noxesiumapi.event.NoxesiumQibTriggeredEvent
 import me.iris.noxesiumapi.serverrules.CreativeItemsManager
 import me.iris.noxesiumapi.util.SoundManager
 import org.bukkit.Bukkit
@@ -59,6 +63,10 @@ public class NoxesiumAPI : JavaPlugin() {
             registerCommands()
         } else {
             Logger.warn("Could not find CommandAPI! Commands will not be loaded.")
+        }
+
+        NoxesiumPackets.SERVER_QIB_TRIGGERED.addListener(noxesiumManager) { packet, player ->
+            NoxesiumQibTriggeredEvent(player, packet.behavior, packet.qibType, packet.entityId).callEvent()
         }
 
         Logger.info("NoxesiumAPI has been enabled!")

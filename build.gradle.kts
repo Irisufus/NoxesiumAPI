@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "me.iris"
-version = "2.2.1"
+version = "2.2.2"
 
 plugins {
     kotlin("jvm") version "1.9.24"
