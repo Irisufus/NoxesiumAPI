@@ -1,16 +1,15 @@
 # NoxesiumAPI
-This is an API with support for [Skript](https://github.com/SkriptLang/Skript) in mind. You can always ask me to add something or check out [NoxesiumUtils by SuperNeon4ik](https://github.com/SuperNeon4ik/NoxesiumUtils/tree/master)
+This is an API with support for [Skript](https://github.com/SkriptLang/Skript) in mind. You can always ask me to add something or check out [NoxesiumUtils by SuperNeon4ik](https://github.com/SuperNeon4ik/NoxesiumUtils)
 
 ## Features
 - Setting server/entity rules
-- Qib system
+- [Qib system](https://github.com/Noxcrew/noxesium/wiki/Qib-System)
 - Noxesium specific events
-- Custom sound system
-- Client-side glow for entities and blocks
+- [Custom sound system](https://github.com/Noxcrew/noxesium/wiki/Custom-Sounds)
+- [Client-side glow for entities and blocks](https://github.com/SkytAsul/GlowingEntities?tab=readme-ov-file#make-entities-glow)
 
 ## Requirements
 - Paper 1.21+ (or a fork)
-- CommandAPI
 
 ## Planned updates
 - Nothing. Yay!
