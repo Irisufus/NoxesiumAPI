@@ -12,7 +12,7 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) i
 - Paper 1.21+ (or a fork)
 
 ## Planned updates
-- Nothing. Yay!
+- Add a function to get SoundSource and ResourceLocation for Skript
 
 ## Developer stuff
 **Adding NoxesiumAPI as a dependency**
