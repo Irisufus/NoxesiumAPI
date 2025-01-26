@@ -53,7 +53,7 @@ public class Rules {
                 subcommand(rules.key) {
                     entitySelectorArgumentManyPlayers("players", false, false)
                     booleanArgument("enabled", false)
-                    playerExecutor { sender, commandArguments ->
+                    anyExecutor { sender, commandArguments ->
                         val players = commandArguments["players"] as Collection<Player>
                         val value = commandArguments["enabled"] as Boolean
                         var affected = 0
@@ -75,7 +75,7 @@ public class Rules {
                 subcommand(rules.key) {
                     entitySelectorArgumentManyPlayers("players", false, false)
                     integerArgument("value")
-                    playerExecutor { sender, commandArguments ->
+                    anyExecutor { sender, commandArguments ->
                         val players = commandArguments["players"] as Collection<Player>
                         val value = commandArguments["value"] as Int
                         var affected = 0
@@ -97,7 +97,7 @@ public class Rules {
                 subcommand(rule.key) {
                     entitySelectorArgumentManyPlayers("players", false, false)
                     itemStackArgument("value")
-                    playerExecutor { sender, commandArguments ->
+                    anyExecutor { sender, commandArguments ->
                         val players = commandArguments["players"] as Collection<Player>
                         val value = commandArguments["value"] as ItemStack
                         var affected = 0
@@ -106,7 +106,7 @@ public class Rules {
                                 creativeItemsManager.addItem(value)
                             } else {
                                 sender.sendRichMessage("<red>This item has already been added!")
-                                return@playerExecutor
+                                return@anyExecutor
                             }
                         }
                         for (player in players) {
@@ -130,7 +130,7 @@ public class Rules {
         RuleCommands.add(
             subcommand("reset") {
                 entitySelectorArgumentManyPlayers("players", false, false)
-                playerExecutor { sender, commandArguments ->
+                anyExecutor { sender, commandArguments ->
                     val players = commandArguments["players"] as Collection<Player>
                     var affected = 0
                     for (player in players) {

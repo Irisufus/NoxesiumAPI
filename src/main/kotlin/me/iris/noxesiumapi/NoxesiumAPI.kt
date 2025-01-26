@@ -7,6 +7,7 @@ import com.noxcrew.noxesium.paper.api.network.NoxesiumPacket
 import com.noxcrew.noxesium.paper.api.network.NoxesiumPackets
 import com.noxcrew.noxesium.paper.api.rule.EntityRules
 import com.noxcrew.noxesium.paper.api.rule.ServerRules
+import dev.jorel.commandapi.CommandPermission
 import dev.jorel.commandapi.kotlindsl.commandAPICommand
 import dev.jorel.commandapi.kotlindsl.subcommand
 import fr.skytasul.glowingentities.GlowingBlocks
@@ -122,7 +123,7 @@ public class NoxesiumAPI : JavaPlugin() {
             }
         }
         commandAPICommand("noxesiumapi", "noxesiumapi") {
-            withRequirement { sender: CommandSender -> sender.isOp }
+            withPermission(CommandPermission.OP)
             subcommand(rules)
             subcommand(sound)
             subcommand(creativeItems)

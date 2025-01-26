@@ -1,6 +1,7 @@
 package me.iris.noxesiumapi.commands
 
 import dev.jorel.commandapi.CommandAPICommand
+import dev.jorel.commandapi.kotlindsl.anyExecutor
 import dev.jorel.commandapi.kotlindsl.itemStackArgument
 import dev.jorel.commandapi.kotlindsl.playerExecutor
 import dev.jorel.commandapi.kotlindsl.subcommand
@@ -19,13 +20,13 @@ public class CreativeItems {
     private fun add(): CommandAPICommand {
         return subcommand("add") {
             itemStackArgument("value")
-            playerExecutor { sender, commandArguments ->
+            anyExecutor { sender, commandArguments ->
                 val value = commandArguments["value"] as ItemStack
                 if (!creativeItemsManager.list().contains(value)) {
                     creativeItemsManager.addItem(value)
                 } else {
                     sender.sendRichMessage("<red>This item has already been added!")
-                    return@playerExecutor
+                    return@anyExecutor
                 }
                 creativeItemsManager.update()
                 sender.sendMessage(Component.text("Added ", NamedTextColor.GREEN)
@@ -39,13 +40,13 @@ public class CreativeItems {
     private fun remove(): CommandAPICommand {
         return subcommand("remove") {
             itemStackArgument("value")
-            playerExecutor { sender, commandArguments ->
+            anyExecutor { sender, commandArguments ->
                 val value = commandArguments["value"] as ItemStack
                 if (creativeItemsManager.list().contains(value)) {
                     creativeItemsManager.removeItem(value)
                 } else {
                     sender.sendRichMessage("<red>This item wasn't registered!")
-                    return@playerExecutor
+                    return@anyExecutor
                 }
                 creativeItemsManager.update()
                 sender.sendMessage(Component.text("Removed ", NamedTextColor.GREEN)
@@ -58,7 +59,7 @@ public class CreativeItems {
 
     private fun update(): CommandAPICommand {
         return subcommand("update") {
-            playerExecutor { sender, _ ->
+            anyExecutor { sender, _ ->
                 creativeItemsManager.update()
                 sender.sendRichMessage("<green>Updated the custom creative tab!")
             }
@@ -67,7 +68,7 @@ public class CreativeItems {
 
     private fun list(): CommandAPICommand {
         return subcommand("list") {
-            playerExecutor { sender, _ ->
+            anyExecutor { sender, _ ->
                 if (creativeItemsManager.list().isNotEmpty()) {
                     creativeItemsManager.list().forEach { item ->
                         sender.sendMessage(Component.text("<aqua>Id: <blue>").append(item.displayName()))

@@ -33,7 +33,7 @@ public class Sound {
                     "master", "music", "record", "weather", "block", "hostile", "neutral", "player", "ambient", "voice")).setOptional(true))
             floatArgument("volume", optional = true)
             floatArgument("pitch", optional = true)
-            playerExecutor { sender, commandArguments ->
+            anyExecutor { sender, commandArguments ->
                 val players = commandArguments["players"] as Collection<Player>
                 val id = commandArguments["id"] as Int
                 val sourceArg: String = commandArguments["source"] as String? ?: "master"
@@ -66,7 +66,7 @@ public class Sound {
                     "master", "music", "record", "weather", "block", "hostile", "neutral", "player", "ambient", "voice")).setOptional(true))
             floatArgument("volume", optional = true)
             floatArgument("pitch", optional = true)
-            playerExecutor { sender, commandArguments ->
+            anyExecutor { sender, commandArguments ->
                 val players = commandArguments["players"] as Collection<Player>
                 val id = commandArguments["id"] as Int
                 val sourceArg: String = commandArguments["source"] as String? ?: "master"
@@ -96,7 +96,7 @@ public class Sound {
             floatArgument("volume", optional = false)
             integerArgument("interpolation", optional = false)
             floatArgument("startvolume", optional = true)
-            playerExecutor { sender, commandArguments ->
+            anyExecutor { sender, commandArguments ->
                 val players = commandArguments["players"] as Collection<Player>
                 val id = commandArguments["id"] as Int
                 val volume: Float = commandArguments["volume"] as Float
@@ -121,7 +121,7 @@ public class Sound {
         return subcommand("stop") {
             entitySelectorArgumentManyPlayers("players", false, false)
             integerArgument("id")
-            playerExecutor { sender, commandArguments ->
+            anyExecutor { sender, commandArguments ->
                 val players = commandArguments["players"] as Collection<Player>
                 val id = commandArguments["id"] as Int
                 var affected = 0
@@ -142,7 +142,7 @@ public class Sound {
     private fun add(): CommandAPICommand {
         return subcommand("add") {
             soundArgument("sound", true, false)
-            playerExecutor { sender, commandArguments ->
+            anyExecutor { sender, commandArguments ->
                 val sound = commandArguments["sound"] as NamespacedKey
                 val parsedSound = tryBySeparator(sound.asString(), ':')
                 if (parsedSound != null) {
@@ -162,7 +162,7 @@ public class Sound {
     private fun remove(): CommandAPICommand {
         return subcommand("remove") {
             integerArgument("id", optional = false)
-            playerExecutor { sender, commandArguments ->
+            anyExecutor { sender, commandArguments ->
                 val id = commandArguments["id"] as Int
                 val sound: ResourceLocation? = soundManager.getSound(id)
                 if (sound == null) {
@@ -178,7 +178,7 @@ public class Sound {
 
     private fun list(): CommandAPICommand {
         return subcommand("list") {
-            playerExecutor { sender, _ ->
+            anyExecutor { sender, _ ->
                 if (soundManager.getSounds().isNotEmpty()) {
                     soundManager.getSounds().forEach { (id, sound) ->
                         sender.sendRichMessage("<aqua>Id: <blue>$id <aqua>Sound: <blue>$sound")

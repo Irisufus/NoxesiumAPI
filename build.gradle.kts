@@ -1,12 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "me.iris"
-version = "2.2.2"
+version = "2.2.3"
 
 plugins {
     kotlin("jvm") version "1.9.24"
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.papermc.paperweight.userdev") version "1.7.1"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.14"
+    `maven-publish`
 }
 
 repositories {
@@ -24,12 +25,12 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.3-R0.1-SNAPSHOT")
-    compileOnly("dev.jorel:commandapi-bukkit-core:9.6.1")
-    implementation("fr.skytasul:glowingentities:1.4.1")
-    implementation("com.noxcrew.noxesium:api:2.4.1")
-    implementation("com.noxcrew.noxesium:paper:2.4.1")
-    implementation("dev.jorel:commandapi-bukkit-kotlin:9.6.1")
+    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
+    compileOnly("dev.jorel:commandapi-bukkit-core:9.7.0")
+    implementation("fr.skytasul:glowingentities:1.4.3")
+    implementation("com.noxcrew.noxesium:api:2.5.0")
+    implementation("com.noxcrew.noxesium:paper:2.5.0")
+    implementation("dev.jorel:commandapi-bukkit-kotlin:9.7.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
 }
@@ -82,4 +83,25 @@ tasks.withType<Jar> {
     from({
         configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
     })
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "astrofoxRepository"
+            url = uri("http://144.21.60.201:25568/releases")
+            credentials(PasswordCredentials::class)
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
+        }
+    }
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "me.iris"
+            artifactId = "noxesiumapi"
+            version = "2.2.3"
+            from(components["java"])
+        }
+    }
 }
