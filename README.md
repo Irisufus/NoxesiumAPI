@@ -21,7 +21,7 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) i
 ```gradle
 maven {
     name "astrofoxRepositoryReleases"
-    url "http://144.21.60.201:25568/releases"
+    url "http://144.21.60.201:25566/releases"
 }
 ```
 ```gradle
@@ -32,7 +32,7 @@ implementation "me.iris:noxesiumapi:LATEST_VERSION"
 <repository>
   <id>astrofox-repository-releases</id>
   <name>Astrofox Repository</name>
-  <url>http://144.21.60.201:25568/releases</url>
+  <url>http://144.21.60.201:25566/releases</url>
 </repository>
 ```
 ```xml
