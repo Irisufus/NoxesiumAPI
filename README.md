@@ -17,11 +17,16 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) i
 ## Developer stuff
 **Adding NoxesiumAPI as a dependency**
 
-### Gradle:
+### Gradle (Kotlin):
 ```gradle
 maven {
-    name "astrofoxRepositoryReleases"
-    url "http://144.21.60.201:25566/releases"
+    name = "noxcrewMavenPublic"
+    url = uri("https://maven.noxcrew.com/public")
+}
+
+maven {
+    name = "astrofoxRepository"
+    url = uri("http://144.21.60.201:25566/<repository>")
 }
 ```
 ```gradle
@@ -29,6 +34,11 @@ implementation "me.iris:noxesiumapi:LATEST_VERSION"
 ```
 ### Maven:
 ```xml
+<repository>
+  <id>noxcrew-maven-public</id>
+  <name>Noxcrew Public Maven Repository</name>
+  <url>https://maven.noxcrew.com/public</url>
+</repository>
 <repository>
   <id>astrofox-repository-releases</id>
   <name>Astrofox Repository</name>
