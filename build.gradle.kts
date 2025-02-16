@@ -89,7 +89,7 @@ publishing {
     repositories {
         maven {
             name = "astrofoxRepository"
-            url = uri("http://144.21.60.201:25568/releases")
+            url = uri("http://144.21.60.201:25566/releases")
             credentials(PasswordCredentials::class)
             authentication {
                 create<BasicAuthentication>("basic")
