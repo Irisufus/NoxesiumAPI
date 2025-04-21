@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "me.iris"
-version = "2.2.3"
+version = "2.3.0"
 
 plugins {
-    kotlin("jvm") version "1.9.24"
+    kotlin("jvm") version "2.1.20"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.14"
     `maven-publish`
@@ -25,12 +25,12 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
-    compileOnly("dev.jorel:commandapi-bukkit-core:9.7.0")
+    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
+    compileOnly("dev.jorel:commandapi-bukkit-core:10.0.0")
     implementation("fr.skytasul:glowingentities:1.4.3")
-    implementation("com.noxcrew.noxesium:api:2.5.0")
-    implementation("com.noxcrew.noxesium:paper:2.5.0")
-    implementation("dev.jorel:commandapi-bukkit-kotlin:9.7.0")
+    implementation("com.noxcrew.noxesium:api:2.7.4")
+    implementation("com.noxcrew.noxesium:paper:2.7.4")
+    implementation("dev.jorel:commandapi-bukkit-kotlin:10.0.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
 }
@@ -57,7 +57,7 @@ tasks {
     withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = 21.toString()
-            freeCompilerArgs += listOf("-Xexplicit-api=strict")
+            //freeCompilerArgs += listOf("-Xexplicit-api=strict")
         }
     }
 }
@@ -100,7 +100,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "me.iris"
             artifactId = "noxesiumapi"
-            version = "2.2.3"
+            version = "2.3.0"
             from(components["java"])
         }
     }

@@ -57,13 +57,6 @@ public open class SetRules(private val player: Player) {
         manager.updateServerRules(player)
     }
 
-    public fun disableUiOptimizations(value: Boolean) {
-        val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.DISABLE_UI_OPTIMIZATIONS)
-
-        rule!!.setValue(value)
-        manager.updateServerRules(player)
-    }
-
     public fun showMapInUi(value: Boolean) {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.SHOW_MAP_IN_UI)
 
@@ -110,6 +103,13 @@ public open class SetRules(private val player: Player) {
 
     public fun riptideCoyoteTime(value: Int) {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.RIPTIDE_COYOTE_TIME)
+
+        rule!!.setValue(value)
+        manager.updateServerRules(player)
+    }
+
+    public fun riptidePreCharging(value: Boolean) {
+        val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.RIPTIDE_PRE_CHARGING)
 
         rule!!.setValue(value)
         manager.updateServerRules(player)

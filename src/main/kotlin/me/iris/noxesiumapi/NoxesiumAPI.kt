@@ -3,7 +3,6 @@ package me.iris.noxesiumapi
 import com.noxcrew.noxesium.api.qib.QibDefinition
 import com.noxcrew.noxesium.paper.api.EntityRuleManager
 import com.noxcrew.noxesium.paper.api.NoxesiumManager
-import com.noxcrew.noxesium.paper.api.network.NoxesiumPacket
 import com.noxcrew.noxesium.paper.api.network.NoxesiumPackets
 import com.noxcrew.noxesium.paper.api.rule.EntityRules
 import com.noxcrew.noxesium.paper.api.rule.ServerRules
@@ -15,28 +14,33 @@ import fr.skytasul.glowingentities.GlowingEntities
 import me.iris.noxesiumapi.commands.CreativeItems
 import me.iris.noxesiumapi.commands.Rules
 import me.iris.noxesiumapi.commands.Sound
-import me.iris.noxesiumapi.event.NoxesiumPlayerReadyEvent
 import me.iris.noxesiumapi.event.NoxesiumQibTriggeredEvent
 import me.iris.noxesiumapi.serverrules.CreativeItemsManager
 import me.iris.noxesiumapi.util.SoundManager
 import org.bukkit.Bukkit
-import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-public class NoxesiumAPI : JavaPlugin() {
+class NoxesiumAPI : JavaPlugin() {
 
-    public companion object {
-        public val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
-        public var Logger: Logger = LoggerFactory.getLogger("NoxesiumAPI")
-        public lateinit var instance: NoxesiumAPI
-        public lateinit var noxesiumManager: NoxesiumManager
-        public lateinit var entityRuleManager: EntityRuleManager
-        public lateinit var soundManager: SoundManager
-        public lateinit var creativeItemsManager: CreativeItemsManager
-        public lateinit var glowingEntities: GlowingEntities
-        public lateinit var glowingBlocks: GlowingBlocks
+    companion object {
+        val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
+        var Logger: Logger = LoggerFactory.getLogger("NoxesiumAPI")
+        lateinit var instance: NoxesiumAPI
+            private set
+        lateinit var noxesiumManager: NoxesiumManager
+            private set
+        lateinit var entityRuleManager: EntityRuleManager
+            private set
+        lateinit var soundManager: SoundManager
+            private set
+        lateinit var creativeItemsManager: CreativeItemsManager
+            private set
+        lateinit var glowingEntities: GlowingEntities
+            private set
+        lateinit var glowingBlocks: GlowingBlocks
+            private set
 
     }
 
@@ -48,7 +52,7 @@ public class NoxesiumAPI : JavaPlugin() {
         glowingBlocks = GlowingBlocks(this)
 
         // Register all managers
-        noxesiumManager = Manager(this, Logger)
+        noxesiumManager = me.iris.noxesiumapi.NoxesiumManager(this, Logger)
         noxesiumManager.register()
         entityRuleManager = EntityRuleManager(noxesiumManager)
         entityRuleManager.register()
@@ -71,30 +75,6 @@ public class NoxesiumAPI : JavaPlugin() {
         }
 
         Logger.info("NoxesiumAPI has been enabled!")
-    }
-
-    public fun getInstance(): NoxesiumAPI {
-        return instance
-    }
-
-    public fun getEntityGlow(): GlowingEntities {
-        return glowingEntities
-    }
-
-    public fun getBlockGlow(): GlowingBlocks {
-        return glowingBlocks
-    }
-
-    public fun getManager(): NoxesiumManager {
-        return noxesiumManager
-    }
-
-    public fun getSoundManager(): SoundManager {
-        return soundManager
-    }
-
-    public fun getCreativeItemsManager(): CreativeItemsManager {
-        return creativeItemsManager
     }
 
     override fun onDisable() {

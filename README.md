@@ -1,5 +1,5 @@
 # NoxesiumAPI
-This is an API with support for [Skript](https://github.com/SkriptLang/Skript) in mind. You can always ask me to add something or check out [NoxesiumUtils by SuperNeon4ik](https://github.com/SuperNeon4ik/NoxesiumUtils)
+This is an API with support for [Skript](https://github.com/SkriptLang/Skript) (using [Skript-Reflect](https://github.com/SkriptLang/skript-reflect)) in mind. You can always ask me to add something or check out [NoxesiumUtils by SuperNeon4ik](https://github.com/SuperNeon4ik/NoxesiumUtils)
 
 ## Features
 - Setting server/entity rules
@@ -12,10 +12,10 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) i
 - Paper 1.21+ (or a fork)
 
 ## Planned updates
-- Add a function to get SoundSource and ResourceLocation for Skript
+- Nothing :D
 
-## Developer stuff
-**Adding NoxesiumAPI as a dependency**
+<details>
+<summary>Developer stuff</summary>
 
 ### Gradle (Kotlin):
 ```gradle
@@ -52,9 +52,13 @@ implementation "me.iris:noxesiumapi:LATEST_VERSION"
   <version>LATEST_VERSION</version>
 </dependency>
 ```
+</details>
 
-## Credits
-- [Noxesium by Noxcrew](https://github.com/Noxcrew/noxesium) - Noxesium lol
+<details>
+<summary>Credits</summary>
+
+- [Noxesium by Noxcrew](https://github.com/Noxcrew/noxesium) - Noxesium
 - [GlowingEntities by SkytAsul](https://github.com/SkytAsul/GlowingEntities) - Client-side glowing
 - [NoxesiumUtils by SuperNeon4ik](https://github.com/SuperNeon4ik/NoxesiumUtils) - Inspiration
 - [ExpHost by Astrofox Studios](https://www.exphost.net/) - Hosting the repository
+</details>

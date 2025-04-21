@@ -12,7 +12,7 @@ import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.slf4j.Logger
 
-public class Manager(plugin: Plugin, logger: Logger) : NoxesiumManager(plugin, logger) {
+public class NoxesiumManager(plugin: Plugin, logger: Logger) : NoxesiumManager(plugin, logger) {
 
     override fun onReady(player: Player) {
         NoxesiumPlayerReadyEvent(player).callEvent()

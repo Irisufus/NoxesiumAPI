@@ -2,8 +2,11 @@ package me.iris.noxesiumapi.commands
 
 import com.noxcrew.noxesium.api.protocol.NoxesiumFeature
 import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices
+import com.noxcrew.noxesium.paper.api.rule.GraphicsType
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import dev.jorel.commandapi.CommandAPICommand
+import dev.jorel.commandapi.arguments.ArgumentSuggestions
+import dev.jorel.commandapi.arguments.StringArgument
 import dev.jorel.commandapi.kotlindsl.*
 import me.iris.noxesiumapi.NoxesiumAPI
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.creativeItemsManager
@@ -22,11 +25,11 @@ public class Rules {
         "cameraLocked" to ServerRuleIndices.CAMERA_LOCKED,
         "disableVanillaMusic" to ServerRuleIndices.DISABLE_VANILLA_MUSIC,
         "disableBoatCollisions" to ServerRuleIndices.DISABLE_BOAT_COLLISIONS,
-        "disableUiOptimizations" to ServerRuleIndices.DISABLE_UI_OPTIMIZATIONS,
         "showMapInUi" to ServerRuleIndices.SHOW_MAP_IN_UI,
         "disableDeferredChunkUpdates" to ServerRuleIndices.DISABLE_DEFERRED_CHUNK_UPDATES,
         "enableSmootherClientTrident" to ServerRuleIndices.ENABLE_SMOOTHER_CLIENT_TRIDENT,
-        "disableMapUi" to ServerRuleIndices.DISABLE_MAP_UI
+        "disableMapUi" to ServerRuleIndices.DISABLE_MAP_UI,
+        "riptidePreCharging" to ServerRuleIndices.RIPTIDE_PRE_CHARGING
     )
 
     private var integerServerRules: MutableMap<String, Int> = mutableMapOf(

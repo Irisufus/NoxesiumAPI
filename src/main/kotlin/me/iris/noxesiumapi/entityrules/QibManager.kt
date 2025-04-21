@@ -50,7 +50,7 @@ public class QibManager {
     }
 
     /**
-     * Set the width z-axis for an [Interaction]
+     * Set the width on the z-axis for an [Interaction]
      */
     public fun setWidthZ(entity: Interaction, value: Double) {
         val rule: RemoteServerRule<Any>? = entityManager.getEntityRule(entity, EntityRuleIndices.QIB_WIDTH_Z)

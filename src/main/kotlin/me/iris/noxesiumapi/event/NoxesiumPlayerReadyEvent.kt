@@ -9,7 +9,7 @@ public class NoxesiumPlayerReadyEvent(player: Player) : PlayerEvent(player) {
         public val handlers: HandlerList = HandlerList()
 
         @JvmStatic
-        public fun getHandlerList(): HandlerList {
+        fun getHandlerList(): HandlerList {
             return handlers
         }
     }
