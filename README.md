@@ -12,7 +12,7 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) (
 - Paper 1.21+ (or a fork)
 
 ## Planned updates
-- Nothing :D
+- Add support for ClientboundOpenLinkPacket
 
 <details>
 <summary>Developer stuff</summary>
