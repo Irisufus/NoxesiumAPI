@@ -13,6 +13,7 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) (
 
 ## Planned updates
 - Add support for ClientboundOpenLinkPacket
+- Util for skulls and offsets
 
 <details>
 <summary>Developer stuff</summary>
