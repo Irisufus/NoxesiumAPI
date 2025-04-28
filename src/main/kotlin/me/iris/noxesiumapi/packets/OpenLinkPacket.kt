@@ -14,7 +14,6 @@ class OpenLinkPacket {
         @JvmStatic
         fun sendLink(player: Player, text: Component?, url: String) {
             if (!manager.isUsingNoxesium(player, NoxesiumFeature.OPEN_LINK_PACKET)) return
-            Component.text("meow").appendNewline()
             manager.sendPacket(player, ClientboundOpenLinkPacket(text, url))
         }
     }
