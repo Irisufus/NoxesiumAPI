@@ -2,11 +2,8 @@ package me.iris.noxesiumapi.commands
 
 import com.noxcrew.noxesium.api.protocol.NoxesiumFeature
 import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices
-import com.noxcrew.noxesium.paper.api.rule.GraphicsType
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import dev.jorel.commandapi.CommandAPICommand
-import dev.jorel.commandapi.arguments.ArgumentSuggestions
-import dev.jorel.commandapi.arguments.StringArgument
 import dev.jorel.commandapi.kotlindsl.*
 import me.iris.noxesiumapi.NoxesiumAPI
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.creativeItemsManager
@@ -14,10 +11,11 @@ import me.iris.noxesiumapi.NoxesiumAPI.Companion.noxesiumManager
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-public class Rules {
+@Suppress("unchecked_cast")
+class Rules {
 
-    public companion object {
-        public var RuleCommands: MutableList<CommandAPICommand> = mutableListOf()
+    companion object {
+        var RuleCommands: MutableList<CommandAPICommand> = mutableListOf()
     }
 
     private var booleanServerRules: MutableMap<String, Int> = mutableMapOf(
@@ -44,7 +42,7 @@ public class Rules {
 
     private var allRules: MutableMap<String, Int> = mutableMapOf()
 
-    public fun registerCommands() {
+    fun registerCommands() {
         NoxesiumAPI.Logger.info("Creating server rules subcommands...")
         allRules.putAll(booleanServerRules)
         allRules.putAll(integerServerRules)
@@ -54,7 +52,7 @@ public class Rules {
         for (rules in booleanServerRules) {
             RuleCommands.add(
                 subcommand(rules.key) {
-                    entitySelectorArgumentManyPlayers("players", false, false)
+                    entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
                     booleanArgument("enabled", false)
                     anyExecutor { sender, commandArguments ->
                         val players = commandArguments["players"] as Collection<Player>
@@ -76,7 +74,7 @@ public class Rules {
         for (rules in integerServerRules) {
             RuleCommands.add(
                 subcommand(rules.key) {
-                    entitySelectorArgumentManyPlayers("players", false, false)
+                    entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
                     integerArgument("value")
                     anyExecutor { sender, commandArguments ->
                         val players = commandArguments["players"] as Collection<Player>
@@ -98,7 +96,7 @@ public class Rules {
         for (rule in itemStackServerRules) {
             RuleCommands.add(
                 subcommand(rule.key) {
-                    entitySelectorArgumentManyPlayers("players", false, false)
+                    entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
                     itemStackArgument("value")
                     anyExecutor { sender, commandArguments ->
                         val players = commandArguments["players"] as Collection<Player>
@@ -132,7 +130,7 @@ public class Rules {
         // Reset server rules
         RuleCommands.add(
             subcommand("reset") {
-                entitySelectorArgumentManyPlayers("players", false, false)
+                entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
                 anyExecutor { sender, commandArguments ->
                     val players = commandArguments["players"] as Collection<Player>
                     var affected = 0

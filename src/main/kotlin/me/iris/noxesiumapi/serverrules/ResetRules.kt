@@ -8,102 +8,103 @@ import org.bukkit.entity.Player
 /**
  * Reset the value of a server rule for a [Player]
  */
-public class ResetRules(private val player: Player) {
+@Suppress("unused")
+class ResetRules(private val player: Player) {
 
     private var manager = NoxesiumAPI.noxesiumManager
 
-    public fun disableSpinAttackCollision() {
+    fun disableSpinAttackCollision() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.DISABLE_SPIN_ATTACK_COLLISIONS)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun heldItemNameOffset() {
+    fun heldItemNameOffset() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.HELD_ITEM_NAME_OFFSET)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun cameraLocked() {
+    fun cameraLocked() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.CAMERA_LOCKED)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun disableVanillaMusic() {
+    fun disableVanillaMusic() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.DISABLE_VANILLA_MUSIC)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun disableBoatCollisions() {
+    fun disableBoatCollisions() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.DISABLE_BOAT_COLLISIONS)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun handItemOverride() {
+    fun handItemOverride() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.HAND_ITEM_OVERRIDE)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun showMapInUi() {
+    fun showMapInUi() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.SHOW_MAP_IN_UI)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun disableDeferredChunkUpdates() {
+    fun disableDeferredChunkUpdates() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.DISABLE_DEFERRED_CHUNK_UPDATES)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun customCreativeItems() {
+    fun customCreativeItems() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.CUSTOM_CREATIVE_ITEMS)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun overrideGraphicsMode() {
+    fun overrideGraphicsMode() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.OVERRIDE_GRAPHICS_MODE)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun enableSmootherClientTrident() {
+    fun enableSmootherClientTrident() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.ENABLE_SMOOTHER_CLIENT_TRIDENT)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun disableMapInUi() {
+    fun disableMapInUi() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.DISABLE_MAP_UI)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun riptideCoyoteTime() {
+    fun riptideCoyoteTime() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.RIPTIDE_COYOTE_TIME)
 
         rule!!.reset()
         manager.updateServerRules(player)
     }
 
-    public fun riptidePreCharging() {
+    fun riptidePreCharging() {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.RIPTIDE_PRE_CHARGING)
 
         rule!!.reset()

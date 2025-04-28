@@ -5,7 +5,10 @@ import org.bukkit.event.HandlerList
 import org.bukkit.event.player.PlayerEvent
 
 @Suppress("unused")
-class NoxesiumPlayerRegisteredEvent(player: Player) : PlayerEvent(player) {
+class NoxesiumPlayerRiptideEvent(
+    player: Player,
+    val slot: Int
+) : PlayerEvent(player) {
     companion object {
         val handlers: HandlerList = HandlerList()
 

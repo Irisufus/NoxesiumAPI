@@ -1,7 +1,8 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "me.iris"
-version = "2.3.0"
+version = "${property("version")}"
 
 plugins {
     kotlin("jvm") version "2.1.20"
@@ -55,9 +56,8 @@ tasks.processResources {
 
 tasks {
     withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = 21.toString()
-            //freeCompilerArgs += listOf("-Xexplicit-api=strict")
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
         }
     }
 }
@@ -100,7 +100,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "me.iris"
             artifactId = "noxesiumapi"
-            version = "2.3.0"
+            version = "${property("version")}"
             from(components["java"])
         }
     }

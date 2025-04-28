@@ -14,14 +14,17 @@ import fr.skytasul.glowingentities.GlowingEntities
 import me.iris.noxesiumapi.commands.CreativeItems
 import me.iris.noxesiumapi.commands.Rules
 import me.iris.noxesiumapi.commands.Sound
+import me.iris.noxesiumapi.event.NoxesiumPlayerRiptideEvent
 import me.iris.noxesiumapi.event.NoxesiumQibTriggeredEvent
+import me.iris.noxesiumapi.packets.OpenLinkPacket
 import me.iris.noxesiumapi.serverrules.CreativeItemsManager
-import me.iris.noxesiumapi.util.SoundManager
+import me.iris.noxesiumapi.packets.SoundManager
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+@Suppress("unused")
 class NoxesiumAPI : JavaPlugin() {
 
     companion object {
@@ -32,6 +35,8 @@ class NoxesiumAPI : JavaPlugin() {
         lateinit var noxesiumManager: NoxesiumManager
             private set
         lateinit var entityRuleManager: EntityRuleManager
+            private set
+        lateinit var openLinkPacket: OpenLinkPacket
             private set
         lateinit var soundManager: SoundManager
             private set
@@ -74,13 +79,41 @@ class NoxesiumAPI : JavaPlugin() {
             NoxesiumQibTriggeredEvent(player, packet.behavior, packet.qibType, packet.entityId).callEvent()
         }
 
+        NoxesiumPackets.SERVER_RIPTIDE.addListener(noxesiumManager) { packet, player ->
+            NoxesiumPlayerRiptideEvent(player, packet.slot).callEvent()
+        }
+
         Logger.info("NoxesiumAPI has been enabled!")
+    }
+
+    fun getInstance(): NoxesiumAPI {
+        return instance
+    }
+
+    fun getEntityGlow(): GlowingEntities {
+        return glowingEntities
+    }
+
+    fun getBlockGlow(): GlowingBlocks {
+        return glowingBlocks
+    }
+
+    fun getManager(): NoxesiumManager {
+        return noxesiumManager
+    }
+
+    fun getSoundManager(): SoundManager {
+        return soundManager
+    }
+
+    fun getCreativeItemsManager(): CreativeItemsManager {
+        return creativeItemsManager
     }
 
     override fun onDisable() {
         noxesiumManager.unregister()
         entityRuleManager.unregister()
-        Logger.info("NoxUtils has been disabled!")
+        Logger.info("NoxesiumAPI has been disabled!")
     }
 
     private fun registerCommands() {

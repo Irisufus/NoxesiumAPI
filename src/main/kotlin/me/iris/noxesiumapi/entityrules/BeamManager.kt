@@ -10,7 +10,8 @@ import org.bukkit.entity.EnderCrystal
 import java.awt.Color
 import java.util.*
 
-public class BeamManager(private var entity: Entity) {
+@Suppress("unused")
+class BeamManager(private var entity: Entity) {
     // Only works for minecraft:guardian, minecraft:elder_guardian and minecraft:end_crystal
     init {
         if (entity.type != EntityType.GUARDIAN && entity.type != EntityType.END_CRYSTAL) {
@@ -23,7 +24,7 @@ public class BeamManager(private var entity: Entity) {
     /**
      * Set the beam color for a [Guardian] or [EnderCrystal] (also disables the bubbles on guardian beams)
      */
-    public fun setBeamColor(color: Optional<Color>) {
+    fun setBeamColor(color: Optional<Color>) {
         var rule: RemoteServerRule<Any>? = entityManager.getEntityRule(entity, EntityRuleIndices.BEAM_COLOR)
         rule!!.setValue(color)
 
@@ -36,7 +37,7 @@ public class BeamManager(private var entity: Entity) {
     /**
      * Set the beam fade/gradient for a [Guardian] or [EnderCrystal]
      */
-    public fun setBeamFade(color: Optional<Color>) {
+    fun setBeamFade(color: Optional<Color>) {
         val rule: RemoteServerRule<Any>? = entityManager.getEntityRule(entity, EntityRuleIndices.BEAM_COLOR_FADE)
         rule!!.setValue(color)
     }
@@ -44,7 +45,7 @@ public class BeamManager(private var entity: Entity) {
     /**
      * Reset the beam color for a [Guardian] or [EnderCrystal]
      */
-    public fun resetBeamColor() {
+    fun resetBeamColor() {
         val rule: RemoteServerRule<Any>? = entityManager.getEntityRule(entity, EntityRuleIndices.BEAM_COLOR)
         rule!!.reset()
     }
@@ -52,7 +53,7 @@ public class BeamManager(private var entity: Entity) {
     /**
      * Reset the beam fade/gradient for a [Guardian] or [EnderCrystal]
      */
-    public fun resetBeamFade() {
+    fun resetBeamFade() {
         val rule: RemoteServerRule<Any>? = entityManager.getEntityRule(entity, EntityRuleIndices.BEAM_COLOR_FADE)
         rule!!.reset()
     }

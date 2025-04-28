@@ -12,7 +12,7 @@ import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.slf4j.Logger
 
-public class NoxesiumManager(plugin: Plugin, logger: Logger) : NoxesiumManager(plugin, logger) {
+class NoxesiumManager(plugin: Plugin, logger: Logger) : NoxesiumManager(plugin, logger) {
 
     override fun onReady(player: Player) {
         NoxesiumPlayerReadyEvent(player).callEvent()
@@ -20,7 +20,7 @@ public class NoxesiumManager(plugin: Plugin, logger: Logger) : NoxesiumManager(p
 
     override fun onPlayerRegistered(player: Player) {
         NoxesiumPlayerRegisteredEvent(player).callEvent()
-        // Send all Qib behaviours after a player gets registered as a Noxesium user
+        // Send all Qib behaviors after a player gets registered as a Noxesium user
         val rule: RemoteServerRule<Any>? = getServerRule(player, ServerRuleIndices.QIB_BEHAVIORS)
         rule!!.value = NoxesiumAPI.qibDefinitions
         updateServerRules(player)

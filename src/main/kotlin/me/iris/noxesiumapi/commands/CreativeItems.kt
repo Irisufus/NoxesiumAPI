@@ -3,7 +3,6 @@ package me.iris.noxesiumapi.commands
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.kotlindsl.anyExecutor
 import dev.jorel.commandapi.kotlindsl.itemStackArgument
-import dev.jorel.commandapi.kotlindsl.playerExecutor
 import dev.jorel.commandapi.kotlindsl.subcommand
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.Logger
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.creativeItemsManager
@@ -11,10 +10,10 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.inventory.ItemStack
 
-public class CreativeItems {
+class CreativeItems {
 
-    public companion object {
-        public var creativeItemsCommands: MutableList<CommandAPICommand> = mutableListOf()
+    companion object {
+        var creativeItemsCommands: MutableList<CommandAPICommand> = mutableListOf()
     }
 
     private fun add(): CommandAPICommand {
@@ -80,7 +79,7 @@ public class CreativeItems {
         }
     }
 
-    public fun registerCommands() {
+    fun registerCommands() {
         Logger.info("Creating creativeItems subcommands...")
         creativeItemsCommands.add(add())
         creativeItemsCommands.add(remove())

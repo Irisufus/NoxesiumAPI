@@ -15,17 +15,18 @@ import net.minecraft.sounds.SoundSource
 import org.bukkit.entity.Player
 import org.joml.Vector3f
 
-public class Sound {
+@Suppress("unchecked_cast")
+class Sound {
 
-    public companion object {
-        public var SoundCommands: MutableList<CommandAPICommand> = mutableListOf()
+    companion object {
+        var SoundCommands: MutableList<CommandAPICommand> = mutableListOf()
     }
 
     private val soundManager = NoxesiumAPI.soundManager
 
     private fun play(): CommandAPICommand {
         return subcommand("play") {
-            entitySelectorArgumentManyPlayers("players", false, false)
+            entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
             integerArgument("id")
             booleanArgument("ignore", false)
             withArguments(StringArgument("source")
@@ -47,7 +48,14 @@ public class Sound {
                 } else {
                     for (player in players) {
                         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
-                        soundManager.playSound(player, id, source, false, false, ignore, volume, pitch, Vector3f())
+                        soundManager.playSound(player, id, source,
+                            looping = false,
+                            attenuation = false,
+                            ignoreIfPlaying = ignore,
+                            volume = volume,
+                            pitch = pitch,
+                            position = Vector3f()
+                        )
                         affected++
                     }
                     sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
@@ -58,7 +66,7 @@ public class Sound {
 
     private fun playLoop(): CommandAPICommand {
         return subcommand("playloop") {
-            entitySelectorArgumentManyPlayers("players", false, false)
+            entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
             integerArgument("id")
             booleanArgument("ignore", false)
             withArguments(StringArgument("source")
@@ -80,7 +88,14 @@ public class Sound {
                 } else {
                     for (player in players) {
                         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
-                        soundManager.playSound(player, id, source, true, false, ignore, volume, pitch, Vector3f())
+                        soundManager.playSound(player, id, source,
+                            looping = true,
+                            attenuation = false,
+                            ignoreIfPlaying = ignore,
+                            volume = volume,
+                            pitch = pitch,
+                            position = Vector3f()
+                        )
                         affected++
                     }
                     sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
@@ -91,7 +106,7 @@ public class Sound {
 
     private fun modify(): CommandAPICommand {
         return subcommand("modify") {
-            entitySelectorArgumentManyPlayers("players", false, false)
+            entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
             integerArgument("id")
             floatArgument("volume", optional = false)
             integerArgument("interpolation", optional = false)
@@ -119,7 +134,7 @@ public class Sound {
 
     private fun stop(): CommandAPICommand {
         return subcommand("stop") {
-            entitySelectorArgumentManyPlayers("players", false, false)
+            entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
             integerArgument("id")
             anyExecutor { sender, commandArguments ->
                 val players = commandArguments["players"] as Collection<Player>
@@ -141,7 +156,7 @@ public class Sound {
 
     private fun add(): CommandAPICommand {
         return subcommand("add") {
-            soundArgument("sound", true, false)
+            soundArgument("sound", useNamespacedKey = true, optional = false)
             anyExecutor { sender, commandArguments ->
                 val sound = commandArguments["sound"] as NamespacedKey
                 val parsedSound = tryBySeparator(sound.asString(), ':')
@@ -190,7 +205,7 @@ public class Sound {
         }
     }
 
-    public fun registerCommands() {
+    fun registerCommands() {
         Logger.info("Creating sound subcommands...")
         SoundCommands.add(play())
         SoundCommands.add(playLoop())

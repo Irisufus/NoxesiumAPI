@@ -10,15 +10,16 @@ import me.iris.noxesiumapi.NoxesiumAPI
 import org.bukkit.entity.Interaction
 import org.bukkit.entity.Player
 
-public class QibManager {
+@Suppress("unused")
+class QibManager {
     // Qibs are only usable on minecraft:interaction entities
     private val manager = NoxesiumAPI.noxesiumManager
     private val entityManager = NoxesiumAPI.entityRuleManager
 
     /**
-     * Define and add a definition to list of Qib definitions
+     * Define and add a definition to a list of Qib definitions
      */
-    public fun addDefinition(id: String, onEnter: QibEffect?, onLeave: QibEffect?, whileInside: QibEffect?, onJump: QibEffect?, trigger: Boolean) {
+    fun addDefinition(id: String, onEnter: QibEffect?, onLeave: QibEffect?, whileInside: QibEffect?, onJump: QibEffect?, trigger: Boolean) {
         val definition = QibDefinition(onEnter, onLeave, whileInside, onJump, trigger)
         qibDefinitions[id] = definition
     }
@@ -26,14 +27,14 @@ public class QibManager {
     /**
      * Remove a definition from the list of Qib definitions
      */
-    public fun removeDefinition(id: String) {
+    fun removeDefinition(id: String) {
         qibDefinitions.remove(id)
     }
 
     /**
      * Send all Qib definitions to a [Player]
      */
-    public fun sendDefinitions(player: Player) {
+    fun sendDefinitions(player: Player) {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.QIB_BEHAVIORS)
         rule!!.reset()
         rule.value = qibDefinitions
@@ -44,7 +45,7 @@ public class QibManager {
     /**
      * Set the Qib behavior for an [Interaction]
      */
-    public fun setBehavior(entity: Interaction, id: String) {
+    fun setBehavior(entity: Interaction, id: String) {
         val rule: RemoteServerRule<Any>? = entityManager.getEntityRule(entity, EntityRuleIndices.QIB_BEHAVIOR)
         rule!!.value = id
     }
@@ -52,7 +53,7 @@ public class QibManager {
     /**
      * Set the width on the z-axis for an [Interaction]
      */
-    public fun setWidthZ(entity: Interaction, value: Double) {
+    fun setWidthZ(entity: Interaction, value: Double) {
         val rule: RemoteServerRule<Any>? = entityManager.getEntityRule(entity, EntityRuleIndices.QIB_WIDTH_Z)
         rule!!.value = value
     }

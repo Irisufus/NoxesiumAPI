@@ -1,4 +1,4 @@
-package me.iris.noxesiumapi.util
+package me.iris.noxesiumapi.packets
 
 import com.noxcrew.noxesium.paper.api.NoxesiumManager
 import com.noxcrew.noxesium.paper.api.network.clientbound.ClientboundCustomSoundModifyPacket
@@ -9,29 +9,31 @@ import net.minecraft.sounds.SoundSource
 import org.bukkit.entity.Player
 import org.joml.Vector3f
 
-public class SoundManager(private val manager: NoxesiumManager) {
+
+class SoundManager(private val manager: NoxesiumManager) {
 
     private val sounds: MutableMap<Int, ResourceLocation> = mutableMapOf()
 
-    public fun addSound(sound: ResourceLocation): Int {
+    fun addSound(sound: ResourceLocation): Int {
         val size = sounds.size.inc()
         sounds[size] = sound
         return size
+
     }
 
-    public fun removeSound(id: Int) {
+    fun removeSound(id: Int) {
         sounds.remove(id)
     }
 
-    public fun getSound(id: Int): ResourceLocation? {
+     fun getSound(id: Int): ResourceLocation? {
         return sounds[id]
     }
 
-    public fun getSounds(): Map<Int, ResourceLocation> {
+     fun getSounds(): Map<Int, ResourceLocation> {
         return sounds
     }
 
-    public fun playSound(
+    fun playSound(
         player: Player,
         id: Int,
         category: SoundSource,
@@ -59,14 +61,15 @@ public class SoundManager(private val manager: NoxesiumManager) {
             entityId,
             unix,
             offset
-        ))
+        )
+        )
     }
 
-    public fun stopSound(player: Player, id: Int) {
+    fun stopSound(player: Player, id: Int) {
         manager.sendPacket(player, ClientboundCustomSoundStopPacket(id))
     }
 
-    public fun modifySound(player: Player, id: Int, volume: Float, interpolationTicks: Int, startVolume: Float? = null) {
+    fun modifySound(player: Player, id: Int, volume: Float, interpolationTicks: Int, startVolume: Float? = null) {
         manager.sendPacket(player, ClientboundCustomSoundModifyPacket(id, volume, interpolationTicks, startVolume))
     }
 
