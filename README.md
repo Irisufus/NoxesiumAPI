@@ -12,9 +12,7 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) (
 - Paper 1.21+ (or a fork)
 
 ## Planned updates
-- Add support for ClientboundOpenLinkPacket
-- Util for skulls and offsets
-- Restrict rule commands to server versions
+- Overhaul commands
 
 <details>
 <summary>Developer stuff</summary>
