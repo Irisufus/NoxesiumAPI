@@ -9,7 +9,7 @@ This is an API with support for [Skript](https://github.com/SkriptLang/Skript) (
 - [Client-side glow for entities and blocks](https://github.com/SkytAsul/GlowingEntities?tab=readme-ov-file#make-entities-glow)
 
 ## Requirements
-- Paper 1.21+ (or a fork)
+- Paper 1.21.4+ (or a fork)
 
 ## Planned updates
 - Overhaul commands
