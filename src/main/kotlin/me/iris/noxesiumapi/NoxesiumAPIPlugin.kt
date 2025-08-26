@@ -3,7 +3,6 @@ package me.iris.noxesiumapi
 import com.noxcrew.noxesium.api.qib.QibDefinition
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
-import dev.jorel.commandapi.CommandPermission
 import dev.jorel.commandapi.kotlindsl.commandAPICommand
 import dev.jorel.commandapi.kotlindsl.subcommand
 import fr.skytasul.glowingentities.GlowingBlocks
@@ -110,15 +109,17 @@ class NoxesiumAPIPlugin : JavaPlugin() {
 
         val check = NoxesiumCheckCommand().createCommand()
         val clientSettings = ClientSettingsCommand().createCommand()
+        val openLink = OpenLinkCommand().createCommand()
 
         commandAPICommand("noxesiumapi", "noxesiumapi") {
-            withPermission(CommandPermission.OP)
+            withPermission("noxesiumapi.command")
             subcommand(rules)
             subcommand(sound)
             subcommand(creativeItems)
             subcommand(restrictDebugOptions)
             subcommand(check)
             subcommand(clientSettings)
+            subcommand(openLink)
         }
         Logger.info("/noxesiumapi command loaded!")
     }
