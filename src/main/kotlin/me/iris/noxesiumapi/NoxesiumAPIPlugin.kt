@@ -81,17 +81,11 @@ class NoxesiumAPIPlugin : JavaPlugin() {
 
     private fun registerCommands() {
         ServerRulesCommand().registerCommands()
-        SoundCommand().registerCommands()
         CreativeItemsCommand().registerCommands()
         RestrictDebugOptionsCommand().registerCommands()
 
         val rules = subcommand("serverrules") {
             for (command in ServerRulesCommand.RuleCommands) {
-                subcommand(command)
-            }
-        }
-        val sound = subcommand("sound") {
-            for (command in SoundCommand.SoundCommands) {
                 subcommand(command)
             }
         }
@@ -107,19 +101,14 @@ class NoxesiumAPIPlugin : JavaPlugin() {
             }
         }
 
-        val check = NoxesiumCheckCommand().createCommand()
         val clientSettings = ClientSettingsCommand().createCommand()
-        val openLink = OpenLinkCommand().createCommand()
 
         commandAPICommand("noxesiumapi", "noxesium") {
             withPermission("noxesiumapi.command")
             subcommand(rules)
-            subcommand(sound)
             subcommand(creativeItems)
             subcommand(restrictDebugOptions)
-            subcommand(check)
             subcommand(clientSettings)
-            subcommand(openLink)
         }
         Logger.info("/noxesiumapi command loaded!")
     }
