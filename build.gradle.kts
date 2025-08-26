@@ -105,6 +105,7 @@ publishing {
             authentication {
                 create<BasicAuthentication>("basic")
             }
+            isAllowInsecureProtocol = true
         }
     }
     publications {
