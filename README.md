@@ -1,18 +1,24 @@
 # NoxesiumAPI
-This is an API with support for [Skript](https://github.com/SkriptLang/Skript) (using [Skript-Reflect](https://github.com/SkriptLang/skript-reflect)) in mind. You can always ask me to add something or check out [NoxesiumUtils by SuperNeon4ik](https://github.com/SuperNeon4ik/NoxesiumUtils)
+A plugin and API making communicating with [Noxesium](https://github.com/Noxcrew/noxesium) clients easier.
+
+<img
+  src="https://dcbadge.limes.pink/api/server/https://discord.gg/NJnqPTcuqP?style=flat&compact=true"
+  alt="write a description depending on your usage"
+/>
 
 ## Features
 - Setting server/entity rules
 - [Qib system](https://github.com/Noxcrew/noxesium/wiki/Qib-System)
 - Noxesium specific events
 - [Custom sound system](https://github.com/Noxcrew/noxesium/wiki/Custom-Sounds)
-- [Client-side glow for entities and blocks](https://github.com/SkytAsul/GlowingEntities?tab=readme-ov-file#make-entities-glow)
+- [Client-side glow for entities and blocks](https://github.com/SkytAsul/GlowingEntities?tab=readme-ov-file#make-entities-glow) (plugin only)
+- [Skript](https://github.com/SkriptLang/Skript) friendly (using [Skript-Reflect](https://github.com/SkriptLang/skript-reflect))
 
 ## Requirements
 - Paper 1.21.4+ (or a fork)
 
 ## Planned updates
-- Overhaul commands
+- Update to Noxesium v3
 
 <details>
 <summary>Developer stuff</summary>
@@ -26,11 +32,11 @@ maven {
 
 maven {
     name = "astrofoxRepository"
-    url = uri("http://144.21.60.201:25566/<repository>")
+    url = uri("http://144.21.60.201:25566/releases")
 }
 ```
 ```gradle
-implementation "me.iris:noxesiumapi:LATEST_VERSION"
+implementation "me.iris:noxesiumapi:2.4.0"
 ```
 ### Maven:
 ```xml
@@ -49,11 +55,10 @@ implementation "me.iris:noxesiumapi:LATEST_VERSION"
 <dependency>
   <groupId>me.iris</groupId>
   <artifactId>noxesiumapi</artifactId>
-  <version>LATEST_VERSION</version>
+  <version>2.4.0</version>
 </dependency>
 ```
 </details>
-
 <details>
 <summary>Credits</summary>
 
