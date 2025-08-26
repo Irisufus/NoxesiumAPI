@@ -67,3 +67,5 @@ implementation("me.iris:noxesiumapi:2.4.0")
 - [NoxesiumUtils by SuperNeon4ik](https://github.com/SuperNeon4ik/NoxesiumUtils) - Inspiration
 - [ExpHost by Astrofox Studios](https://www.exphost.net/) - Hosting the repository
 </details>
+
+*Not affiliated or endorsed by Noxcrew*
