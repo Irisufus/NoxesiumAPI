@@ -4,19 +4,19 @@ import com.noxcrew.noxesium.api.protocol.NoxesiumFeature
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.arguments.ArgumentSuggestions
 import dev.jorel.commandapi.arguments.StringArgument
-import org.bukkit.NamespacedKey
 import dev.jorel.commandapi.kotlindsl.*
 import me.iris.noxesiumapi.NoxesiumAPI
-import me.iris.noxesiumapi.NoxesiumAPI.Companion.Logger
+import me.iris.noxesiumapi.NoxesiumAPIPlugin.Companion.Logger
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.noxesiumManager
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.resources.ResourceLocation.tryBySeparator
 import net.minecraft.sounds.SoundSource
+import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.joml.Vector3f
 
 @Suppress("unchecked_cast")
-class Sound {
+class SoundCommand {
 
     companion object {
         var SoundCommands: MutableList<CommandAPICommand> = mutableListOf()
@@ -161,7 +161,7 @@ class Sound {
                 val sound = commandArguments["sound"] as NamespacedKey
                 val parsedSound = tryBySeparator(sound.asString(), ':')
                 if (parsedSound != null) {
-                    if (soundManager.getSounds().containsValue(parsedSound)) {
+                    if (soundManager.getAllSounds().containsValue(parsedSound)) {
                         sender.sendRichMessage("<red>This sound was already registered")
                     } else {
                         val result = soundManager.addSound(parsedSound)
@@ -194,8 +194,8 @@ class Sound {
     private fun list(): CommandAPICommand {
         return subcommand("list") {
             anyExecutor { sender, _ ->
-                if (soundManager.getSounds().isNotEmpty()) {
-                    soundManager.getSounds().forEach { (id, sound) ->
+                if (soundManager.getAllSounds().isNotEmpty()) {
+                    soundManager.getAllSounds().forEach { (id, sound) ->
                         sender.sendRichMessage("<aqua>Id: <blue>$id <aqua>Sound: <blue>$sound")
                     }
                 } else {

@@ -111,4 +111,10 @@ class ResetRules(private val player: Player) {
         manager.updateServerRules(player)
     }
 
+    fun restrictDebugOptions() {
+        val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.RESTRICT_DEBUG_OPTIONS)
+
+        rule!!.reset()
+        manager.updateServerRules(player)
+    }
 }

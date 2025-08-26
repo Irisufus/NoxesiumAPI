@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -6,13 +7,14 @@ version = "${property("version")}"
 
 plugins {
     kotlin("jvm") version "2.1.20"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.14"
+    id("com.gradleup.shadow") version "8.3.3"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
     `maven-publish`
 }
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://repo.papermc.io/repository/maven-public/") {
         name = "papermc-repo"
     }
@@ -27,11 +29,12 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
-    compileOnly("dev.jorel:commandapi-bukkit-core:10.0.0")
-    implementation("fr.skytasul:glowingentities:1.4.3")
-    implementation("com.noxcrew.noxesium:api:2.7.6")
-    implementation("com.noxcrew.noxesium:paper:2.7.6")
-    implementation("dev.jorel:commandapi-bukkit-kotlin:10.0.0")
+    compileOnly("dev.jorel:commandapi-bukkit-core:10.1.2")
+    implementation("fr.skytasul:glowingentities:1.4.6")
+    implementation("com.noxcrew.noxesium:api:2.7.7")
+    implementation("com.noxcrew.noxesium:paper:2.7.7")
+    implementation("dev.jorel:commandapi-bukkit-kotlin:10.1.2")
+    implementation("dev.jorel:commandapi-bukkit-shade-mojang-mapped:10.1.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
 }
@@ -67,10 +70,18 @@ java {
     withSourcesJar()
 }
 
+tasks.withType<ShadowJar> {
+    relocate("dev.jorel.commandapi", "me.iris.noxesiumapi.commandapi")
+    manifest {
+        attributes["paperweight-mappings-namespace"] = "mojang"
+    }
+}
+
 tasks.withType<Jar> {
     // Otherwise you'll get a "No main manifest attribute" error
     manifest {
-        attributes["Main-Class"] = "me.iris.noxesiumapi.NoxesiumAPI"
+        attributes["Main-Class"] = "me.iris.noxesiumapi.NoxesiumAPIPlugin"
+        attributes["paperweight-mappings-namespace"] = "mojang"
     }
 
     // To avoid the duplicate handling strategy error

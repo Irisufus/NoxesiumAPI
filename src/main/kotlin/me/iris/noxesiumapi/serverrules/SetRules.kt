@@ -4,7 +4,6 @@ import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices
 import com.noxcrew.noxesium.paper.api.rule.GraphicsType
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import me.iris.noxesiumapi.NoxesiumAPI
-import me.iris.noxesiumapi.NoxesiumAPI.Companion.creativeItemsManager
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -76,6 +75,7 @@ class SetRules(private val player: Player) {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.CUSTOM_CREATIVE_ITEMS)
 
         rule!!.reset()
+        val creativeItemsManager = NoxesiumAPI.creativeItemsManagers[player.uniqueId]!!
         rule.setValue(creativeItemsManager.list())
         manager.updateServerRules(player)
     }
@@ -112,6 +112,15 @@ class SetRules(private val player: Player) {
         val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.RIPTIDE_PRE_CHARGING)
 
         rule!!.setValue(value)
+        manager.updateServerRules(player)
+    }
+
+    fun restrictDebugOptions() {
+        val rule: RemoteServerRule<Any>? = manager.getServerRule(player, ServerRuleIndices.RESTRICT_DEBUG_OPTIONS)
+
+        rule!!.reset()
+        val restrictDebugOptionsManager = NoxesiumAPI.restrictDebugOptionsManagers[player.uniqueId]!!
+        rule.setValue(restrictDebugOptionsManager.list())
         manager.updateServerRules(player)
     }
 
