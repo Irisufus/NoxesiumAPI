@@ -3,11 +3,10 @@ package me.iris.noxesiumapi.commands
 import com.noxcrew.noxesium.api.protocol.NoxesiumFeature
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.arguments.ArgumentSuggestions
-import dev.jorel.commandapi.arguments.StringArgument
 import dev.jorel.commandapi.kotlindsl.*
 import me.iris.noxesiumapi.NoxesiumAPI
-import me.iris.noxesiumapi.NoxesiumAPIPlugin.Companion.Logger
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.noxesiumManager
+import me.iris.noxesiumapi.NoxesiumAPIPlugin.Companion.Logger
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.resources.ResourceLocation.tryBySeparator
 import net.minecraft.sounds.SoundSource
@@ -26,59 +25,25 @@ class SoundCommand {
 
     private fun play(): CommandAPICommand {
         return subcommand("play") {
-            entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
             integerArgument("id")
-            booleanArgument("ignore", false)
-            withArguments(StringArgument("source")
-                .replaceSuggestions(ArgumentSuggestions.strings(
-                    "master", "music", "record", "weather", "block", "hostile", "neutral", "player", "ambient", "voice")).setOptional(true))
-            floatArgument("volume", optional = true)
-            floatArgument("pitch", optional = true)
-            anyExecutor { sender, commandArguments ->
-                val players = commandArguments["players"] as Collection<Player>
-                val id = commandArguments["id"] as Int
-                val sourceArg: String = commandArguments["source"] as String? ?: "master"
-                val ignore = commandArguments["ignore"] as Boolean
-                val volume: Float = commandArguments["volume"] as Float? ?: 1F
-                val pitch: Float = commandArguments["pitch"] as Float? ?: 1F
-                var affected = 0
-                val source: SoundSource = SoundSource.valueOf(sourceArg.uppercase())
-                if (soundManager.getSound(id) == null) {
-                    sender.sendRichMessage("<red>No sound was registered at id <dark_red>$id")
-                } else {
-                    for (player in players) {
-                        if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
-                        soundManager.playSound(player, id, source,
-                            looping = false,
-                            attenuation = false,
-                            ignoreIfPlaying = ignore,
-                            volume = volume,
-                            pitch = pitch,
-                            position = Vector3f()
-                        )
-                        affected++
+            stringArgument("source") {
+                replaceSuggestions(
+                    ArgumentSuggestions.strings { _ ->
+                        arrayOf("master", "music", "record", "weather", "block", "hostile", "neutral", "player", "ambient", "voice")
                     }
-                    sender.sendRichMessage("<dark_green>$affected <green>player(s) affected")
-                }
+                )
             }
-        }
-    }
-
-    private fun playLoop(): CommandAPICommand {
-        return subcommand("playloop") {
             entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
-            integerArgument("id")
             booleanArgument("ignore", false)
-            withArguments(StringArgument("source")
-                .replaceSuggestions(ArgumentSuggestions.strings(
-                    "master", "music", "record", "weather", "block", "hostile", "neutral", "player", "ambient", "voice")).setOptional(true))
             floatArgument("volume", optional = true)
             floatArgument("pitch", optional = true)
+            booleanArgument("loop", true)
             anyExecutor { sender, commandArguments ->
                 val players = commandArguments["players"] as Collection<Player>
                 val id = commandArguments["id"] as Int
                 val sourceArg: String = commandArguments["source"] as String? ?: "master"
                 val ignore = commandArguments["ignore"] as Boolean
+                val loop = commandArguments["loop"] as Boolean? ?: false
                 val volume: Float = commandArguments["volume"] as Float? ?: 1F
                 val pitch: Float = commandArguments["pitch"] as Float? ?: 1F
                 var affected = 0
@@ -89,7 +54,7 @@ class SoundCommand {
                     for (player in players) {
                         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) continue
                         soundManager.playSound(player, id, source,
-                            looping = true,
+                            looping = loop,
                             attenuation = false,
                             ignoreIfPlaying = ignore,
                             volume = volume,
@@ -208,7 +173,6 @@ class SoundCommand {
     fun registerCommands() {
         Logger.info("Creating sound subcommands...")
         SoundCommands.add(play())
-        SoundCommands.add(playLoop())
         SoundCommands.add(modify())
         SoundCommands.add(stop())
         SoundCommands.add(add())
