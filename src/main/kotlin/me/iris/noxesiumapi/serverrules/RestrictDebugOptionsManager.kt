@@ -45,7 +45,7 @@ class RestrictDebugOptionsManager(private var player: Player) {
     }
 
     /**
-     * Sends/updates restricted debug options for all players.
+     * Sends/updates restricted debug options.
      */
     fun update() {
         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.CUSTOM_GLOW_COLOR)) return

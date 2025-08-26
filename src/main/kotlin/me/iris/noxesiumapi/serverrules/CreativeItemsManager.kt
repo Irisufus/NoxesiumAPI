@@ -43,7 +43,7 @@ class CreativeItemsManager(private var player: Player) {
     }
 
     /**
-     * Sends/updates the custom creative tab for all players.
+     * Sends/updates the custom creative tab.
      */
     fun update() {
         if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.NEW_MCC_FEATURES)) return
