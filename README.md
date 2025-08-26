@@ -36,7 +36,7 @@ maven {
 }
 ```
 ```gradle
-implementation "me.iris:noxesiumapi:2.4.0"
+implementation("me.iris:noxesiumapi:2.4.0")
 ```
 ### Maven:
 ```xml
