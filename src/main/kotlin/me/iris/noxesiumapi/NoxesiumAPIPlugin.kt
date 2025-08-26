@@ -36,7 +36,7 @@ class NoxesiumAPIPlugin : JavaPlugin() {
 
     override fun onLoad() {
         CommandAPI.onLoad(CommandAPIBukkitConfig(this)
-            .setNamespace("noxesiumapi")
+            .setNamespace("noxesium")
             .shouldHookPaperReload(true)
         )
     }
@@ -111,7 +111,7 @@ class NoxesiumAPIPlugin : JavaPlugin() {
         val clientSettings = ClientSettingsCommand().createCommand()
         val openLink = OpenLinkCommand().createCommand()
 
-        commandAPICommand("noxesiumapi", "noxesiumapi") {
+        commandAPICommand("noxesiumapi", "noxesium") {
             withPermission("noxesiumapi.command")
             subcommand(rules)
             subcommand(sound)
