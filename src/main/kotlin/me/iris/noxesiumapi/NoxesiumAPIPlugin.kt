@@ -80,15 +80,9 @@ class NoxesiumAPIPlugin : JavaPlugin() {
     }
 
     private fun registerCommands() {
-        ServerRulesCommand().registerCommands()
         CreativeItemsCommand().registerCommands()
         RestrictDebugOptionsCommand().registerCommands()
 
-        val rules = subcommand("serverrules") {
-            for (command in ServerRulesCommand.RuleCommands) {
-                subcommand(command)
-            }
-        }
         val creativeItems = subcommand("creativeItems") {
             for (command in CreativeItemsCommand.creativeItemsCommands) {
                 subcommand(command)
@@ -105,7 +99,6 @@ class NoxesiumAPIPlugin : JavaPlugin() {
 
         commandAPICommand("noxesiumapi", "noxesium") {
             withPermission("noxesiumapi.command")
-            subcommand(rules)
             subcommand(creativeItems)
             subcommand(restrictDebugOptions)
             subcommand(clientSettings)
