@@ -1,0 +1,100 @@
+# Imports the classes using Skript-Reflect
+import:
+	com.noxcrew.noxesium.api.qib.QibEffect
+	com.noxcrew.noxesium.api.qib.QibCondition
+	me.iris.noxesiumapi.entityrules.QibManager
+	java.util.ArrayList
+
+# Creates a new QibManager and registers qib definitions when the server starts
+on server start:
+	set {-data::noxesium::qibs::manager} to new QibManager()
+	registerPadQibs()
+
+# Registers the qib definitions
+function registerPadQibs():
+	speedPadQib()
+	jumpPadQib()
+
+# A function that sends all registered qib definitions to all players
+function resendQibs():
+	registerPadQibs()
+	wait 1 tick
+	loop all players:
+		# You can use this line to send to a specific player instead of all players
+		{-data::noxesium::qibs::manager}.sendDefinitions(loop-player)
+
+# A function that readds qibs to all LOADED entities in a world
+function readdQibs(world: world):
+	loop all interactions in {_world}:
+		loop-entity has scoreboard tag "speedPad"
+		{-data::noxesium::qibs::manager}.setBehavior(loop-entity, "speedPad")
+
+		loop-entity has scoreboard tag "jumpPad"
+		{-data::noxesium::qibs::manager}.setBehavior(loop-entity, "jumpPad")
+
+# A command to update qib definitions and readds them to all LOADED entities in the player's world
+command /updateqibs:
+	permission: op 
+	trigger:
+		registerPadQibs()
+		wait 15 ticks
+		readdQibs(player's world)
+
+# Adds a qib definition to an entity when it is loaded incase it was saved with one
+on entities loaded:
+	loop event-entities:
+		loop-entity has scoreboard tag "speedPad"
+		{-data::noxesium::qibs::manager}.setBehavior(loop-entity, "speedPad")
+
+		loop-entity has scoreboard tag "jumpPad"
+		{-data::noxesium::qibs::manager}.setBehavior(loop-entity, "jumpPad")
+
+# Spawns an interaction entity with the speedPad behavior and returns the interaction entity
+local function speedPad(player: location) :: entity:
+	# Spawns an interaction entity
+	spawn an interaction at {_player}
+	set {_interaction} to last spawned interaction
+	set interaction width of {_interaction} to 1
+	set interaction height of {_interaction} to 0.7
+
+	# Gives the interaction a tag so the qib can be reapplied after the server restarts
+	add "speedPad" to scoreboard tags of {_interaction}
+	
+	# Sets the qib behavior
+	{-data::noxesium::qibs::manager}.setBehavior({_interaction}, "speedPad")
+	return {_interaction}
+
+# Creates the speedPad qib definition
+local function speedPadQib():
+	# Create the effects for the definitions
+	set {_speedEffect} to new QibEffect.GivePotionEffect("minecraft", "speed", 60, 1, false, false, false)
+
+	# Creates and adds the speedPad qib to the list of definitions
+	{-data::noxesium::qibs::manager}.addDefinition("speedPad", {_speedEffect}, null, {_speedEffect}, null, true)
+
+# Spawns an interaction entity with the jumpPad behavior and returns the interaction entity
+local function jumpPad(player: location) :: entity:
+	spawn an interaction at {_player}
+	set {_interaction} to last spawned interaction
+	set interaction width of {_interaction} to 2.999
+	set interaction height of {_interaction} to 0.5
+
+	add "jumpPad" to scoreboard tags of {_interaction}
+	
+	{-data::noxesium::qibs::manager}.setBehavior({_interaction}, "jumpPad")
+	return {_interaction}
+
+# Creates the jumpPad qib definition
+local function jumpPadQib():
+	# Create the effects for the definitions
+	set {_jumpEffect} to new QibEffect.SetVelocityYawPitch(0, true, -30, false, 1.5, 180)
+	set {_jumpEffect} to new QibEffect.Wait(1, {_jumpEffect})
+	set {_soundEffect} to new QibEffect.PlaySound("jump_pad", 1, 1)
+	set {_list} to new ArrayList()
+	{_list}.add({_jumpEffect})
+	{_list}.add({_soundEffect})
+
+	set {_comboEffect} to new QibEffect.Multiple({_list})
+
+	# Create and add the definitions to the list
+	{-data::noxesium::qibs::manager}.addDefinition("jumpPad", null, null, null, {_comboEffect}, true)

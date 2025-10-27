@@ -1,0 +1,45 @@
+# Import the classes using Skript-Reflect
+import:
+    me.iris.noxesiumapi.NoxesiumAPI
+    me.iris.noxesiumapi.serverrules.SetRules
+    com.noxcrew.noxesium.api.protocol.NoxesiumFeature
+    
+# Get the NoxesiumManager and EntityGlow instances when the server starts
+on load:
+    set {-data::noxesium::instance} to the instance of plugin "NoxesiumAPI"
+    set {-data::noxesium::manager} to {-data::noxesium::instance}.getManager()
+    set {-data::noxesium::glow} to {-data::noxesium::instance}.getEntityGlow()
+
+# A function that checks if a player is using Noxesium V2
+function hasNoxesium(player: player) :: boolean:
+    set {_result} to {-data::noxesium::manager}.isUsingNoxesium({_player}, NoxesiumFeature.API_V2)
+    return {_result}
+
+# Functions to set server rules for a player
+function tridentCollision(player: player, value: boolean):
+    new SetRules({_player}).disableSpinAttackCollision({_value})
+
+function heldItemNameOffset(player: player, value: integer):
+    new SetRules({_player}).heldItemNameOffset({_value})
+
+function cameraLocked(player: player, value: boolean):
+    new SetRules({_player}).cameraLocked({_value})
+
+function disableVanillaMusic(player: player, value: boolean):
+    new SetRules({_player}).disableVanillaMusic({_value})
+
+function disableBoatCollisions(player: player, value: boolean):
+    new SetRules({_player}).disableBoatCollisions({_value})
+
+function showMapInUi(player: player, value: boolean):
+    new SetRules({_player}).showMapInUi({_value})
+
+function disableMapInUi(player: player, value: boolean):
+    new SetRules({_player}).disableMapInUi({_value})
+    
+function riptideCoyoteTime(player: player, value: integer):
+    new SetRules({_player}).riptideCoyoteTime({_value})
+
+function smootherClientTridents(player: player, value: boolean):
+    new SetRules({_player}).enableSmootherClientTrident({_value})
+    
