@@ -3,7 +3,7 @@ package me.iris.noxesiumapi.commands
 import com.noxcrew.noxesium.api.protocol.NoxesiumFeature
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.kotlindsl.anyExecutor
-import dev.jorel.commandapi.kotlindsl.playerArgument
+import dev.jorel.commandapi.kotlindsl.entitySelectorArgumentOnePlayer
 import dev.jorel.commandapi.kotlindsl.subcommand
 import me.iris.noxesiumapi.NoxesiumAPI.Companion.noxesiumManager
 import org.bukkit.entity.Player
@@ -12,16 +12,16 @@ class NoxesiumCheckCommand {
     
     fun createCommand(): CommandAPICommand {
         return subcommand("check") {
-                playerArgument("player", optional = false)
-                anyExecutor { sender, commandArguments ->
-                    val player = commandArguments["player"] as Player
-                    if (noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) {
-                        sender.sendRichMessage("<dark_green>${player.name} <green>has Noxesium installed! ${getNoxesiumVersion(player)}")
-                    } else {
-                        sender.sendRichMessage("<dark_red>${player.name} <red>does not have Noxesium installed!")
-                    }
+            entitySelectorArgumentOnePlayer("player")
+            anyExecutor { sender, commandArguments ->
+                val player = commandArguments["player"] as Player
+                if (noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.API_V2)) {
+                    sender.sendRichMessage("<dark_green>${player.name} <green>has Noxesium installed! ${getNoxesiumVersion(player)}")
+                } else {
+                    sender.sendRichMessage("<dark_red>${player.name} <red>does not have Noxesium installed!")
                 }
             }
+        }
     }
 
     fun getNoxesiumVersion(player: Player) : String {

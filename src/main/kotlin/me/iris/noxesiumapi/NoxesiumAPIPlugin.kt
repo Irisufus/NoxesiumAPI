@@ -2,7 +2,7 @@ package me.iris.noxesiumapi
 
 import com.noxcrew.noxesium.api.qib.QibDefinition
 import dev.jorel.commandapi.CommandAPI
-import dev.jorel.commandapi.CommandAPIBukkitConfig
+import dev.jorel.commandapi.CommandAPIPaperConfig
 import dev.jorel.commandapi.kotlindsl.commandAPICommand
 import dev.jorel.commandapi.kotlindsl.subcommand
 import fr.skytasul.glowingentities.GlowingBlocks
@@ -35,9 +35,9 @@ class NoxesiumAPIPlugin : JavaPlugin() {
     }
 
     override fun onLoad() {
-        CommandAPI.onLoad(CommandAPIBukkitConfig(this)
+        CommandAPI.onLoad(
+            CommandAPIPaperConfig(this)
             .setNamespace("noxesiumapi")
-            .shouldHookPaperReload(true)
         )
     }
 

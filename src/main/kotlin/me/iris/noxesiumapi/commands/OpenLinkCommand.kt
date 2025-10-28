@@ -15,7 +15,7 @@ class OpenLinkCommand {
         return subcommand("link") {
             entitySelectorArgumentManyPlayers("players", allowEmpty = false, optional = false)
             textArgument("link")
-            adventureChatComponentArgument("text")
+            chatComponentArgument("text")
             anyExecutor { _, commandArguments ->
                 val players = commandArguments["players"] as Collection<Player>
                 val url = commandArguments["link"] as String

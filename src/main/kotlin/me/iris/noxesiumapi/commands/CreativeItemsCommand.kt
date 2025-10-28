@@ -104,7 +104,7 @@ class CreativeItemsCommand {
 
     private fun list(): CommandAPICommand {
         return subcommand("list") {
-            playerArgument("player")
+            entitySelectorArgumentOnePlayer("player")
             anyExecutor { sender, commandArguments ->
                 val player = commandArguments["player"] as Player
                 val creativeItemsManager = NoxesiumAPI.creativeItemsManagers[player.uniqueId]
