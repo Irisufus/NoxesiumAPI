@@ -36,7 +36,7 @@ class NoxesiumAPIPlugin : JavaPlugin() {
 
     override fun onLoad() {
         CommandAPI.onLoad(CommandAPIBukkitConfig(this)
-            .setNamespace("noxesiumapi")
+            .setNamespace("noxesium")
             .shouldHookPaperReload(true)
         )
     }
@@ -80,21 +80,9 @@ class NoxesiumAPIPlugin : JavaPlugin() {
     }
 
     private fun registerCommands() {
-        ServerRulesCommand().registerCommands()
-        SoundCommand().registerCommands()
         CreativeItemsCommand().registerCommands()
         RestrictDebugOptionsCommand().registerCommands()
 
-        val rules = subcommand("serverrules") {
-            for (command in ServerRulesCommand.RuleCommands) {
-                subcommand(command)
-            }
-        }
-        val sound = subcommand("sound") {
-            for (command in SoundCommand.SoundCommands) {
-                subcommand(command)
-            }
-        }
         val creativeItems = subcommand("creativeItems") {
             for (command in CreativeItemsCommand.creativeItemsCommands) {
                 subcommand(command)
@@ -107,19 +95,13 @@ class NoxesiumAPIPlugin : JavaPlugin() {
             }
         }
 
-        val check = NoxesiumCheckCommand().createCommand()
         val clientSettings = ClientSettingsCommand().createCommand()
-        val openLink = OpenLinkCommand().createCommand()
 
-        commandAPICommand("noxesiumapi", "noxesiumapi") {
+        commandAPICommand("noxesiumapi", "noxesium") {
             withPermission("noxesiumapi.command")
-            subcommand(rules)
-            subcommand(sound)
             subcommand(creativeItems)
             subcommand(restrictDebugOptions)
-            subcommand(check)
             subcommand(clientSettings)
-            subcommand(openLink)
         }
         Logger.info("/noxesiumapi command loaded!")
     }

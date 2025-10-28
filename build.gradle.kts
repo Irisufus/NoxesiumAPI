@@ -6,9 +6,9 @@ group = "me.iris"
 version = "${property("version")}"
 
 plugins {
-    kotlin("jvm") version "2.1.20"
-    id("com.gradleup.shadow") version "8.3.3"
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
+    kotlin("jvm") version "2.2.0"
+    id("com.gradleup.shadow") version "9.0.0-beta4"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.18"
     `maven-publish`
 }
 
@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
     compileOnly("dev.jorel:commandapi-bukkit-core:10.1.2")
     implementation("fr.skytasul:glowingentities:1.4.6")
     implementation("com.noxcrew.noxesium:api:2.7.7")
