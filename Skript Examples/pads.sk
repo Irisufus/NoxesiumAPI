@@ -89,7 +89,7 @@ local function jumpPadQib():
 	# Create the effects for the definitions
 	set {_jumpEffect} to new QibEffect.SetVelocityYawPitch(0, true, -30, false, 1.5, 180)
 	set {_jumpEffect} to new QibEffect.Wait(1, {_jumpEffect})
-	set {_soundEffect} to new QibEffect.PlaySound("jump_pad", 1, 1)
+	set {_soundEffect} to new QibEffect.PlaySound("namespace", "sound", 1, 1)
 	set {_list} to new ArrayList()
 	{_list}.add({_jumpEffect})
 	{_list}.add({_soundEffect})
