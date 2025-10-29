@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
     compileOnly("dev.jorel:commandapi-paper-core:11.0.0")
     implementation("fr.skytasul:glowingentities:1.4.8")
     implementation("com.noxcrew.noxesium:api:2.7.8")
