@@ -15,7 +15,7 @@ A plugin and API making communicating with [Noxesium](https://github.com/Noxcrew
 - [Skript](https://github.com/SkriptLang/Skript) friendly (using [Skript-Reflect](https://github.com/SkriptLang/skript-reflect))
 
 ## Requirements
-- Paper 1.21.4+ (or a fork)
+- Paper 1.21.8+ (or a fork)
 
 ## Planned updates
 - Update to Noxesium v3
