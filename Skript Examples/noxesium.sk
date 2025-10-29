@@ -7,7 +7,7 @@ import:
 # Get the NoxesiumManager and EntityGlow instances when the server starts
 on load:
     set {-data::noxesium::instance} to the instance of plugin "NoxesiumAPI"
-    set {-data::noxesium::manager} to {-data::noxesium::instance}.getManager()
+    set {-data::noxesium::manager} to {-data::noxesium::instance}.getNoxesiumAPI().getManager()
     set {-data::noxesium::glow} to {-data::noxesium::instance}.getEntityGlow()
 
 # A function that checks if a player is using Noxesium V2

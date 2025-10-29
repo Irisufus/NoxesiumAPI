@@ -61,6 +61,10 @@ class NoxesiumAPIPlugin : JavaPlugin() {
         return instance
     }
 
+    fun getNoxesiumAPI(): NoxesiumAPI {
+        return noxesiumAPI
+    }
+
     fun getEntityGlow(): GlowingEntities {
         return glowingEntities
     }
