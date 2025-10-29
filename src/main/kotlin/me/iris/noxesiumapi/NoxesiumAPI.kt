@@ -10,6 +10,8 @@ import me.iris.noxesiumapi.event.NoxesiumQibTriggeredEvent
 import me.iris.noxesiumapi.packets.SoundManager
 import me.iris.noxesiumapi.serverrules.CreativeItemsManager
 import me.iris.noxesiumapi.serverrules.RestrictDebugOptionsManager
+import me.iris.noxesiumapi.serverrules.SmoothTrident
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
 import java.util.*
@@ -58,6 +60,8 @@ class NoxesiumAPI(
         NoxesiumPackets.SERVER_RIPTIDE.addListener(noxesiumManager) { packet, player ->
             NoxesiumPlayerRiptideEvent(player, packet.slot).callEvent()
         }
+
+        Bukkit.getPluginManager().registerEvents(SmoothTrident(noxesiumManager), plugin)
     }
 
     fun getManager(): NoxesiumManager {
