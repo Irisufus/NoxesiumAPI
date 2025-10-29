@@ -36,7 +36,7 @@ maven {
 }
 ```
 ```gradle
-implementation("me.iris:noxesiumapi:2.4.0")
+implementation("me.iris:noxesiumapi:2.4.2")
 ```
 ### Maven:
 ```xml
@@ -55,7 +55,7 @@ implementation("me.iris:noxesiumapi:2.4.0")
 <dependency>
   <groupId>me.iris</groupId>
   <artifactId>noxesiumapi</artifactId>
-  <version>2.4.0</version>
+  <version>2.4.2</version>
 </dependency>
 ```
 </details>
