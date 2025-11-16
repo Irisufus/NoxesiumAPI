@@ -15,7 +15,7 @@ A plugin and API making communicating with [Noxesium](https://github.com/Noxcrew
 - [Skript](https://github.com/SkriptLang/Skript) friendly (using [Skript-Reflect](https://github.com/SkriptLang/skript-reflect))
 
 ## Requirements
-- Paper 1.21.8+ (or a fork)
+- Paper 1.21.9+ (or a fork)
 
 ## Planned updates
 - Update to Noxesium v3
@@ -36,7 +36,7 @@ maven {
 }
 ```
 ```gradle
-implementation("me.iris:noxesiumapi:2.4.2")
+implementation("me.iris:noxesiumapi:2.4.3")
 ```
 ### Maven:
 ```xml
@@ -55,7 +55,7 @@ implementation("me.iris:noxesiumapi:2.4.2")
 <dependency>
   <groupId>me.iris</groupId>
   <artifactId>noxesiumapi</artifactId>
-  <version>2.4.2</version>
+  <version>2.4.3</version>
 </dependency>
 ```
 </details>

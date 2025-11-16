@@ -28,11 +28,11 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.10-R0.1-SNAPSHOT")
     compileOnly("dev.jorel:commandapi-paper-core:11.0.0")
-    implementation("fr.skytasul:glowingentities:1.4.8")
-    implementation("com.noxcrew.noxesium:api:2.7.8")
-    implementation("com.noxcrew.noxesium:paper:2.7.8")
+    implementation("fr.skytasul:glowingentities:1.4.9")
+    implementation("com.noxcrew.noxesium:api:2.8.0")
+    implementation("com.noxcrew.noxesium:paper:2.8.0")
     implementation("dev.jorel:commandapi-kotlin-paper:11.0.0")
     implementation("dev.jorel:commandapi-paper-shade:11.0.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")

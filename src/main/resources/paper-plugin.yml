@@ -1,7 +1,7 @@
 name: NoxesiumAPI
-version: '2.4.2'
+version: '2.4.3'
 main: me.iris.noxesiumapi.NoxesiumAPIPlugin
-api-version: '1.21.8'
+api-version: '1.21.10'
 authors: [ Iris ]
 description: An API to communicate with Noxesium clients
 website: https://github.com/Irisufus/NoxesiumAPI

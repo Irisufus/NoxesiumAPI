@@ -10,10 +10,11 @@ object SkullFormatter {
      * Creates a [Component] with a skull from the given data.
      * @param raw If `true` the value is a raw texture, otherwise it's an uuid.
      * @param value The data of this skull.
-     * @param grayscale Whether to draw the skull as grayscale.
+     * @param grayscale No longer supported!
      * @param advance The advance to give to the glyph.
      * @param ascent The ascent to give to the glyph.
      * @param scale The scale of the glyph.
+     * @param hat Whether to include a hat.
      * @return A [Component] created with [SkullStringFormatter].
      */
     fun formatComponent(
@@ -22,19 +23,21 @@ object SkullFormatter {
         grayscale: Boolean,
         advance: Int,
         ascent: Int,
-        scale: Float
+        scale: Float,
+        hat: Boolean
     ) : Component {
-        return Component.translatable(SkullStringFormatter.write(SkullStringFormatter.SkullInfo(raw, value, grayscale, advance, ascent, scale)))
+        return Component.translatable(SkullStringFormatter.write(SkullStringFormatter.SkullInfo(raw, value, grayscale, advance, ascent, scale, hat)))
     }
 
     /**
      * Creates a [String] with a skull from the given data. Use a translatable component to display the skull.
      * @param raw If `true` the value is a raw texture, otherwise it's an uuid.
      * @param value The data of this skull.
-     * @param grayscale Whether to draw the skull as grayscale.
+     * @param grayscale No longer supported!
      * @param advance The advance to give to the glyph.
      * @param ascent The ascent to give to the glyph.
      * @param scale The scale of the glyph.
+     * @param hat Whether to include a hat.
      * @return A [String] created with [SkullStringFormatter].
      */
     fun formatString(
@@ -43,9 +46,10 @@ object SkullFormatter {
         grayscale: Boolean,
         advance: Int,
         ascent: Int,
-        scale: Float
+        scale: Float,
+        hat: Boolean
     ) : String {
-        return SkullStringFormatter.write(SkullStringFormatter.SkullInfo(raw, value, grayscale, advance, ascent, scale))
+        return SkullStringFormatter.write(SkullStringFormatter.SkullInfo(raw, value, grayscale, advance, ascent, scale, hat))
     }
 
 }
