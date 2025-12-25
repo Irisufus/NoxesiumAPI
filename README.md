@@ -32,7 +32,7 @@ maven {
 
 maven {
     name = "astrofoxRepository"
-    url = uri("http://144.21.60.201:25566/releases")
+    url = uri("https://maven.femboys.tech/releases")
 }
 ```
 ```gradle
@@ -48,7 +48,7 @@ implementation("me.iris:noxesiumapi:2.4.3")
 <repository>
   <id>astrofox-repository-releases</id>
   <name>Astrofox Repository</name>
-  <url>http://144.21.60.201:25566/releases</url>
+  <url>https://maven.femboys.tech/releases</url>
 </repository>
 ```
 ```xml
