@@ -5,19 +5,29 @@ import com.noxcrew.noxesium.paper.api.NoxesiumManager
 import com.noxcrew.noxesium.paper.api.network.NoxesiumPackets
 import com.noxcrew.noxesium.paper.api.rule.RemoteServerRule
 import io.papermc.paper.event.entity.EntityAttemptSpinAttackEvent
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.server.level.ServerPlayerGameMode
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.TridentItem
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents
 import net.minecraft.world.item.enchantment.EnchantmentHelper
+import net.minecraft.world.level.GameType
 import org.bukkit.craftbukkit.entity.CraftPlayer
 import org.bukkit.craftbukkit.event.CraftEventFactory
 import org.bukkit.craftbukkit.inventory.CraftItemStack
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerRiptideEvent
+import org.bukkit.inventory.EquipmentSlot
 
 /**
  * Sets up the smooth trident feature which implements trident behavior only
@@ -63,6 +73,56 @@ class SmoothTrident(
                 1.0f,
                 1.0f,
             )
+        }
+    }
+
+    /**
+     * Override the interaction for pre-chargeable riptide tridents to fully avoid Bukkit so we can modify the check if
+     * the trident can be used so it's allowed when not in water.
+     */
+    @EventHandler(priority = EventPriority.HIGH)
+    fun onPlayerInteract(e: PlayerInteractEvent) {
+        if (e.useItemInHand() == Event.Result.DENY) return
+        val smoothTrident: RemoteServerRule<Any>? = noxesiumManager.getServerRule(e.player, ServerRuleIndices.ENABLE_SMOOTHER_CLIENT_TRIDENT)
+        val preCharging: RemoteServerRule<Any>? = noxesiumManager.getServerRule(e.player, ServerRuleIndices.RIPTIDE_PRE_CHARGING)
+
+        if (smoothTrident!!.value == false || preCharging!!.value == false) return
+        if (!e.action.isRightClick) return
+        val itemInHand = (e.item as? CraftItemStack)?.handle ?: return
+        val player = (e.player as CraftPlayer).handle
+        val hand = if (e.hand == EquipmentSlot.OFF_HAND) InteractionHand.OFF_HAND else InteractionHand.MAIN_HAND
+
+        // Ignore non riptide tridents!
+        if (itemInHand.item !is TridentItem || EnchantmentHelper.getTridentSpinAttackStrength(itemInHand, player) <= 0f) return
+
+        // Mimic the vanilla use item logic, but we have to modify the is in water or rain check.
+        // This runs start using item so we properly start using it even if not in water!
+        player.gameMode.modifiedTridentUseItem(player, itemInHand, hand)
+
+        // Prevent the default logic from running as we've replaced it!
+        e.setUseItemInHand(Event.Result.DENY)
+    }
+
+    /** Custom version of use item modified for tridents. */
+    private fun ServerPlayerGameMode.modifiedTridentUseItem(
+        player: ServerPlayer,
+        stack: ItemStack,
+        hand: InteractionHand,
+    ): InteractionResult {
+        // Logic from ServerPlayerGameMode with irrelevant support for other features that aren't
+        // used by tridents removed (most are removed as use duration is not <= 0)
+        if (gameModeForPlayer == GameType.SPECTATOR) {
+            return InteractionResult.PASS
+        } else if (player.cooldowns.isOnCooldown(stack)) {
+            return InteractionResult.PASS
+        } else {
+            // Logic from TridentItem with water check removed
+            if (stack.nextDamageWillBreak()) {
+                return InteractionResult.FAIL
+            } else {
+                player.startUsingItem(hand)
+                return InteractionResult.CONSUME
+            }
         }
     }
 
