@@ -6,7 +6,7 @@ import com.noxcrew.noxesium.paper.commands.playSoundCommand
 import com.noxcrew.noxesium.paper.commands.componentCommands
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.noxcrew.noxesium.api.NoxesiumEntrypoint
-import com.noxcrew.noxesium.api.feature.qib.QibDefinition
+import com.noxcrew.noxesium.paper.ExternalApi
 import com.noxcrew.noxesium.paper.NoxesiumPaper
 import com.noxcrew.noxesium.paper.entrypoint.CommonPaperNoxesiumEntrypoint
 import com.noxcrew.packet.PacketApi
@@ -14,6 +14,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack
 import me.iris.noxesiumapi.components.CustomCreativeItemsManager
 import me.iris.noxesiumapi.components.GuiConstraintsManager
 import me.iris.noxesiumapi.components.RestrictDebugOptionsManager
+import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
@@ -27,12 +28,15 @@ import java.util.*
 class NoxesiumAPI(val plugin: JavaPlugin) {
 
     companion object {
-        val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
+        private lateinit var externalApi: ExternalApi
         val creativeItemsManagers: MutableMap<UUID, CustomCreativeItemsManager> = mutableMapOf()
         val restrictDebugOptionsManagers: MutableMap<UUID, RestrictDebugOptionsManager> = mutableMapOf()
         val guiConstraintsManagers: MutableMap<UUID, GuiConstraintsManager> = mutableMapOf()
-    }
 
+        fun isUsingNoxesium(player: Player) = externalApi.isUsingNoxesium(player)
+
+        fun getInstalledMods(player: Player): Map<String, String> = externalApi.getInstalledMods(player)
+    }
     private val entrypoints = mutableSetOf<() -> NoxesiumEntrypoint>()
     private val commands = mutableSetOf<() -> LiteralArgumentBuilder<CommandSourceStack>>()
 
@@ -48,9 +52,8 @@ class NoxesiumAPI(val plugin: JavaPlugin) {
 
     fun enable() {
         NoxesiumPaper.packetApi.register(plugin)
-
         NoxesiumPaper.enable(entrypoints, commands)
-
+        externalApi = ExternalApi()
     }
 
     fun disable() {

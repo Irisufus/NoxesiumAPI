@@ -27,8 +27,9 @@ object SetEntityComponents {
         entity.setNoxesiumComponent(CommonEntityComponentTypes.BEAM_COLOR_FADE, value)
     }
 
-    fun qibBehavior(entity: Entity, value: Key? = null) {
-        entity.setNoxesiumComponent(CommonEntityComponentTypes.QIB_BEHAVIOR, value)
+    fun qibBehavior(entity: Entity, value: String? = null) {
+        val key = value?.let { Key.key(it) }
+        entity.setNoxesiumComponent(CommonEntityComponentTypes.QIB_BEHAVIOR, key)
     }
 
     fun glowColor(entity: Entity, value: Color? = null) {
