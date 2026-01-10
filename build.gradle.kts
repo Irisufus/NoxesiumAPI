@@ -1,16 +1,19 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
 
 group = "me.iris"
 version = "${property("version")}"
 
 plugins {
-    kotlin("jvm") version "2.2.0"
-    id("com.gradleup.shadow") version "9.0.0-beta4"
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.18"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.paper.userdev)
     `maven-publish`
 }
+
+paperweight.reobfArtifactConfiguration = ReobfArtifactConfiguration.MOJANG_PRODUCTION
 
 repositories {
     mavenCentral()
@@ -28,20 +31,15 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
-    compileOnly("dev.jorel:commandapi-bukkit-core:10.1.2")
-    implementation("fr.skytasul:glowingentities:1.4.6")
-    implementation("com.noxcrew.noxesium:api:2.7.7")
-    implementation("com.noxcrew.noxesium:paper:2.7.7")
-    implementation("dev.jorel:commandapi-bukkit-kotlin:10.1.2")
-    implementation("dev.jorel:commandapi-bukkit-shade-mojang-mapped:10.1.2")
+    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
+    implementation(libs.glowingentities)
+    implementation(libs.bundles.noxesium)
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
 }
 
-val targetJavaVersion = 21
 kotlin {
-    jvmToolchain(targetJavaVersion)
+    jvmToolchain(21)
 }
 
 tasks.build {
@@ -71,7 +69,6 @@ java {
 }
 
 tasks.withType<ShadowJar> {
-    relocate("dev.jorel.commandapi", "me.iris.noxesiumapi.commandapi")
     manifest {
         attributes["paperweight-mappings-namespace"] = "mojang"
     }
@@ -100,12 +97,11 @@ publishing {
     repositories {
         maven {
             name = "astrofoxRepository"
-            url = uri("http://144.21.60.201:25566/releases")
+            url = uri("https://maven.femboys.tech/releases")
             credentials(PasswordCredentials::class)
             authentication {
                 create<BasicAuthentication>("basic")
             }
-            isAllowInsecureProtocol = true
         }
     }
     publications {

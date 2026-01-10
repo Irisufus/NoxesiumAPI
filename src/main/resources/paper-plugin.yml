@@ -3,5 +3,5 @@ version: '3.0.0'
 main: me.iris.noxesiumapi.NoxesiumAPIPlugin
 api-version: '1.21.8'
 authors: [ Iris ]
-description: An API to communicate with Noxesium clients
+description: A plugin and API making communicating with Noxesium clients easier.
 website: https://github.com/Irisufus/NoxesiumAPI

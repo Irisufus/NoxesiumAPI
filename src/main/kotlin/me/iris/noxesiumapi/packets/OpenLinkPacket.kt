@@ -1,15 +1,12 @@
 package me.iris.noxesiumapi.packets
 
-import com.noxcrew.noxesium.api.protocol.NoxesiumFeature
-import com.noxcrew.noxesium.paper.api.network.clientbound.ClientboundOpenLinkPacket
-import me.iris.noxesiumapi.NoxesiumAPI
+import com.noxcrew.noxesium.paper.component.noxesiumPlayer
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 
 @Suppress("unused")
 object OpenLinkPacket {
 
-    val manager = NoxesiumAPI.noxesiumManager
 
     /**
      * Sends an open link prompt to a [Player].
@@ -19,8 +16,7 @@ object OpenLinkPacket {
      * @param text the text to display for the link, can be null.
      */
     fun sendLink(player: Player, url: String, text: Component?) {
-        if (!manager.isUsingNoxesium(player, NoxesiumFeature.OPEN_LINK_PACKET)) return
-        manager.sendPacket(player, ClientboundOpenLinkPacket(text, url))
+        player.noxesiumPlayer?.openLink(url, text)
     }
 
 

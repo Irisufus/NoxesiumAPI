@@ -1,19 +1,11 @@
 package me.iris.noxesiumapi
 
-import com.noxcrew.noxesium.api.qib.QibDefinition
-import com.noxcrew.noxesium.paper.api.EntityRuleManager
-import com.noxcrew.noxesium.paper.api.NoxesiumManager
-import com.noxcrew.noxesium.paper.api.network.NoxesiumPackets
-import com.noxcrew.noxesium.paper.api.rule.EntityRules
-import me.iris.noxesiumapi.event.NoxesiumPlayerRiptideEvent
-import me.iris.noxesiumapi.event.NoxesiumQibTriggeredEvent
-import me.iris.noxesiumapi.packets.SoundManager
-import me.iris.noxesiumapi.serverrules.CreativeItemsManager
-import me.iris.noxesiumapi.serverrules.RestrictDebugOptionsManager
-import org.bukkit.plugin.java.JavaPlugin
-import org.slf4j.Logger
+import com.noxcrew.noxesium.api.feature.qib.QibDefinition
+import com.noxcrew.noxesium.paper.NoxesiumPaper
+import me.iris.noxesiumapi.components.CustomCreativeItemsManager
+import me.iris.noxesiumapi.components.GuiConstraintsManager
+import me.iris.noxesiumapi.components.RestrictDebugOptionsManager
 import java.util.*
-import com.noxcrew.noxesium.paper.api.rule.ServerRules as NoxesiumServerRules
 
 /**
  * If you depend on the NoxesiumAPI plugin use [NoxesiumAPIPlugin.getInstance]
@@ -22,59 +14,27 @@ import com.noxcrew.noxesium.paper.api.rule.ServerRules as NoxesiumServerRules
  * @sample NoxesiumAPIPlugin.onEnable
  */
 @Suppress("unused")
-class NoxesiumAPI(
-    private val plugin: JavaPlugin,
-    private val logger: Logger
-) {
+object NoxesiumAPI {
 
-    companion object {
-        val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
-        val creativeItemsManagers: MutableMap<UUID, CreativeItemsManager> = mutableMapOf()
-        val restrictDebugOptionsManagers: MutableMap<UUID, RestrictDebugOptionsManager> = mutableMapOf()
-        lateinit var noxesiumManager: NoxesiumManager
-            private set
-        lateinit var entityRuleManager: EntityRuleManager
-            private set
-        lateinit var soundManager: SoundManager
-            private set
+    val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
+    val creativeItemsManagers: MutableMap<UUID, CustomCreativeItemsManager> = mutableMapOf()
+    val restrictDebugOptionsManagers: MutableMap<UUID, RestrictDebugOptionsManager> = mutableMapOf()
+    val guiConstraintsManagers: MutableMap<UUID, GuiConstraintsManager> = mutableMapOf()
+
+    lateinit var noxesiumPaper: NoxesiumPaper
+        private set
+
+    fun load() {
+        noxesiumPaper = NoxesiumPaper()
+        noxesiumPaper.onLoad()
     }
 
-    fun register() {
-        // Register all managers
-        noxesiumManager = HookedNoxesiumManager(plugin, logger)
-        noxesiumManager.register()
-        entityRuleManager = EntityRuleManager(noxesiumManager)
-        entityRuleManager.register()
-        soundManager = SoundManager(noxesiumManager)
-
-        // Registers all rules
-        NoxesiumServerRules(noxesiumManager)
-        EntityRules(noxesiumManager)
-
-        NoxesiumPackets.SERVER_QIB_TRIGGERED.addListener(noxesiumManager) { packet, player ->
-            NoxesiumQibTriggeredEvent(player, packet.behavior, packet.qibType, packet.entityId).callEvent()
-        }
-
-        NoxesiumPackets.SERVER_RIPTIDE.addListener(noxesiumManager) { packet, player ->
-            NoxesiumPlayerRiptideEvent(player, packet.slot).callEvent()
-        }
+    fun enable() {
+        noxesiumPaper.onEnable()
     }
 
-    fun getManager(): NoxesiumManager {
-        return noxesiumManager
-    }
-
-    fun getEntityRuleManager(): EntityRuleManager {
-        return entityRuleManager
-    }
-
-    fun getSoundManager(): SoundManager {
-        return soundManager
-    }
-
-    fun unregister() {
-        noxesiumManager.unregister()
-        entityRuleManager.unregister()
+    fun disable() {
+        noxesiumPaper.onDisable()
     }
 
 }

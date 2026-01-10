@@ -1,0 +1,21 @@
+[versions]
+kotlin = "2.2.21"
+shadow = "9.0.0-beta4"
+paper-userdev = "2.0.0-beta.19"
+glowingentities = "1.4.10"
+noxesium = "3.0.0-rc.3-SNAPSHOT"
+
+[libraries]
+glowingentities = { module = "fr.skytasul:glowingentities", version.ref = "glowingentities" }
+noxesium-api = { module = "com.noxcrew.noxesium:api", version.ref = "noxesium" }
+noxesium-paper-platform = { module = "com.noxcrew.noxesium:paper-platform", version.ref = "noxesium" }
+noxesium-paper-api = { module = "com.noxcrew.noxesium:paper-api", version.ref = "noxesium" }
+noxesium-packet = { module = "com.noxcrew.noxesium:paper-packet", version.ref = "noxesium" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+paper-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paper-userdev" }
+
+[bundles]
+noxesium = ["noxesium-api", "noxesium-paper-platform", "noxesium-paper-api", "noxesium-packet"]
