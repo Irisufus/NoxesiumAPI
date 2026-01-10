@@ -47,7 +47,7 @@ object QibManager {
      * Allows defining the qib behavior for an [org.bukkit.entity.Interaction] entity.
      */
     fun setBehavior(entity: Interaction, key: String) {
-        SetEntityComponents.qibBehavior(entity, Key.key(key))
+        SetEntityComponents.qibBehavior(entity, key)
     }
 
     /**
