@@ -1,10 +1,9 @@
-package me.iris.noxesiumapi.entityrules
+package me.iris.noxesiumapi.components
 
 import com.noxcrew.noxesium.api.feature.qib.QibDefinition
 import com.noxcrew.noxesium.api.feature.qib.QibEffect
 import com.noxcrew.noxesium.api.registry.NoxesiumRegistries
 import com.noxcrew.noxesium.api.registry.NoxesiumRegistry
-import me.iris.noxesiumapi.components.SetEntityComponents
 import net.kyori.adventure.key.Key
 import org.bukkit.entity.Interaction
 
@@ -32,7 +31,8 @@ object QibManager {
         onUse: QibEffect?,
         triggerEnterLeaveOnSwitch: Boolean
     ) {
-        val definition = QibDefinition(onEnter, onLeave, whileInside, onJump, onAttack, onUse, triggerEnterLeaveOnSwitch)
+        val definition =
+            QibDefinition(onEnter, onLeave, whileInside, onJump, onAttack, onUse, triggerEnterLeaveOnSwitch)
         qibRegistry.register(Key.key(key), definition)
     }
 
@@ -44,7 +44,7 @@ object QibManager {
     }
 
     /**
-     * Allows defining the qib behavior for an [Interaction] entity.
+     * Allows defining the qib behavior for an [org.bukkit.entity.Interaction] entity.
      */
     fun setBehavior(entity: Interaction, key: String) {
         SetEntityComponents.qibBehavior(entity, Key.key(key))
