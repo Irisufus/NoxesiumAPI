@@ -15,6 +15,8 @@ class NoxesiumAPIPlugin : JavaPlugin() {
         val Logger: Logger = LoggerFactory.getLogger("NoxesiumAPI")
         lateinit var instance: NoxesiumAPIPlugin
             private set
+        lateinit var noxesiumAPI: NoxesiumAPI
+            private set
         lateinit var glowingEntities: GlowingEntities
             private set
         lateinit var glowingBlocks: GlowingBlocks
@@ -22,13 +24,14 @@ class NoxesiumAPIPlugin : JavaPlugin() {
     }
 
     override fun onLoad() {
-        NoxesiumAPI.load()
+        noxesiumAPI = NoxesiumAPI(this)
+        noxesiumAPI.load()
     }
 
     override fun onEnable() {
         instance = this
 
-        NoxesiumAPI.load()
+        noxesiumAPI.enable()
         glowingEntities = GlowingEntities(this)
         glowingBlocks = GlowingBlocks(this)
 
@@ -50,7 +53,7 @@ class NoxesiumAPIPlugin : JavaPlugin() {
     }
 
     override fun onDisable() {
-        NoxesiumAPI.disable()
+         noxesiumAPI.disable()
         glowingEntities.disable()
         glowingBlocks.disable()
         Logger.info("NoxesiumAPI has been disabled!")

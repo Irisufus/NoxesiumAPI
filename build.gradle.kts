@@ -17,23 +17,20 @@ paperweight.reobfArtifactConfiguration = ReobfArtifactConfiguration.MOJANG_PRODU
 
 repositories {
     mavenCentral()
-    mavenLocal()
-    maven("https://repo.papermc.io/repository/maven-public/") {
-        name = "papermc-repo"
-    }
-    maven("https://oss.sonatype.org/content/groups/public/") {
-        name = "sonatype"
-    }
-    maven("https://maven.noxcrew.com/public") {
-        name = "Noxcrew Public Maven Repository"
-    }
-    maven(url = uri("https://repo.codemc.org/repository/maven-public/"))
+    maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://oss.sonatype.org/content/groups/public/")
+    maven("https://maven.noxcrew.com/public")
+    maven("https://repo.codemc.org/repository/maven-public/")
+    maven("https://repo.viaversion.com")
+    maven("https://maven.enginehub.org/repo/")
 }
 
 dependencies {
     paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
     implementation(libs.glowingentities)
     implementation(libs.bundles.noxesium)
+    implementation(libs.viaversion)
+    implementation(libs.prtree)
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
 }
