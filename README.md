@@ -15,7 +15,7 @@ A plugin and API making communicating with [Noxesium](https://github.com/Noxcrew
 - [Skript](https://github.com/SkriptLang/Skript) friendly (using [Skript-Reflect](https://github.com/SkriptLang/skript-reflect))
 
 ## Requirements
-- Paper 1.21.4+ (or a fork)
+- Paper 1.21.9+ (or a fork)
 
 ## Planned updates
 - Update to Noxesium v3
@@ -32,11 +32,11 @@ maven {
 
 maven {
     name = "astrofoxRepository"
-    url = uri("http://144.21.60.201:25566/releases")
+    url = uri("https://maven.femboys.tech/releases")
 }
 ```
 ```gradle
-implementation("me.iris:noxesiumapi:2.4.0")
+implementation("me.iris:noxesiumapi:2.4.3")
 ```
 ### Maven:
 ```xml
@@ -48,14 +48,14 @@ implementation("me.iris:noxesiumapi:2.4.0")
 <repository>
   <id>astrofox-repository-releases</id>
   <name>Astrofox Repository</name>
-  <url>http://144.21.60.201:25566/releases</url>
+  <url>https://maven.femboys.tech/releases</url>
 </repository>
 ```
 ```xml
 <dependency>
   <groupId>me.iris</groupId>
   <artifactId>noxesiumapi</artifactId>
-  <version>2.4.0</version>
+  <version>2.4.3</version>
 </dependency>
 ```
 </details>
