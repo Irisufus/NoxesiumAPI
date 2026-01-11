@@ -1,16 +1,27 @@
-package me.iris.noxesiumapi.serverrules
+package me.iris.noxesiumapi.components
 
-import com.noxcrew.noxesium.api.protocol.NoxesiumFeature
-import com.noxcrew.noxesium.api.util.DebugOption
-import me.iris.noxesiumapi.NoxesiumAPI.Companion.noxesiumManager
+import com.noxcrew.noxesium.core.feature.DebugOption
+import com.noxcrew.noxesium.core.registry.CommonGameComponentTypes
+import com.noxcrew.noxesium.paper.component.setNoxesiumComponent
+import me.iris.noxesiumapi.NoxesiumAPI
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class RestrictDebugOptionsManager(private var player: Player) {
+@Suppress("unused")
+class RestrictDebugOptionsManager(private var player: Player, val resetOnRejoin: Boolean = false) {
+
+    init {
+        NoxesiumAPI.restrictDebugOptionsManagers[player.uniqueId] = this
+    }
+
     private val restrictedDebugOptions: MutableList<Int> = mutableListOf()
 
     fun reinit() {
         player = Bukkit.getPlayer(player.uniqueId)!!
+        if (resetOnRejoin) {
+            clear()
+            update()
+        }
     }
 
     /**
@@ -48,7 +59,6 @@ class RestrictDebugOptionsManager(private var player: Player) {
      * Sends/updates restricted debug options.
      */
     fun update() {
-        if (!noxesiumManager.isUsingNoxesium(player, NoxesiumFeature.CUSTOM_GLOW_COLOR)) return
-        SetRules(player).restrictDebugOptions()
+        player.setNoxesiumComponent(CommonGameComponentTypes.RESTRICT_DEBUG_OPTIONS, restrictedDebugOptions)
     }
 }

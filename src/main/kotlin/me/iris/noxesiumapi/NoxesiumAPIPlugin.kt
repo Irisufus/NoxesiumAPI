@@ -1,28 +1,17 @@
 package me.iris.noxesiumapi
 
-import com.noxcrew.noxesium.api.qib.QibDefinition
-import dev.jorel.commandapi.CommandAPI
-import dev.jorel.commandapi.CommandAPIPaperConfig
-import dev.jorel.commandapi.kotlindsl.commandAPICommand
-import dev.jorel.commandapi.kotlindsl.subcommand
 import fr.skytasul.glowingentities.GlowingBlocks
 import fr.skytasul.glowingentities.GlowingEntities
-import me.iris.noxesiumapi.commands.*
-import me.iris.noxesiumapi.serverrules.CreativeItemsManager
-import me.iris.noxesiumapi.serverrules.RestrictDebugOptionsManager
-import me.iris.noxesiumapi.util.ServerRules
+import me.iris.noxesiumapi.listeners.NoxesiumPlayerAddedToWorldListener
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.util.*
 
 @Suppress("unused")
 class NoxesiumAPIPlugin : JavaPlugin() {
 
     companion object {
-        val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
-        val creativeItemsManagers: MutableMap<UUID, CreativeItemsManager> = mutableMapOf()
-        val restrictDebugOptionsManagers: MutableMap<UUID, RestrictDebugOptionsManager> = mutableMapOf()
         val Logger: Logger = LoggerFactory.getLogger("NoxesiumAPI")
         lateinit var instance: NoxesiumAPIPlugin
             private set
@@ -35,34 +24,24 @@ class NoxesiumAPIPlugin : JavaPlugin() {
     }
 
     override fun onLoad() {
-        CommandAPI.onLoad(
-            CommandAPIPaperConfig(this)
-            .setNamespace("noxesiumapi")
-        )
+        noxesiumAPI = NoxesiumAPI(this)
+        noxesiumAPI.load()
     }
 
     override fun onEnable() {
         instance = this
 
-        noxesiumAPI = NoxesiumAPI(this, Logger)
-        noxesiumAPI.register()
-
+        noxesiumAPI.enable()
         glowingEntities = GlowingEntities(this)
         glowingBlocks = GlowingBlocks(this)
 
-        CommandAPI.onEnable()
-        ServerRules.createAllRules()
-        registerCommands()
+        Bukkit.getPluginManager().registerEvents(NoxesiumPlayerAddedToWorldListener(), this)
 
         Logger.info("NoxesiumAPI has been enabled!")
     }
 
     fun getInstance(): NoxesiumAPIPlugin {
         return instance
-    }
-
-    fun getNoxesiumAPI(): NoxesiumAPI {
-        return noxesiumAPI
     }
 
     fun getEntityGlow(): GlowingEntities {
@@ -73,59 +52,11 @@ class NoxesiumAPIPlugin : JavaPlugin() {
         return glowingBlocks
     }
 
-
     override fun onDisable() {
-        noxesiumAPI.unregister()
-        CommandAPI.unregister("noxesiumapi", true)
-        CommandAPI.onDisable()
+         noxesiumAPI.disable()
         glowingEntities.disable()
         glowingBlocks.disable()
         Logger.info("NoxesiumAPI has been disabled!")
-    }
-
-    private fun registerCommands() {
-        ServerRulesCommand().registerCommands()
-        SoundCommand().registerCommands()
-        CreativeItemsCommand().registerCommands()
-        RestrictDebugOptionsCommand().registerCommands()
-
-        val rules = subcommand("serverrules") {
-            for (command in ServerRulesCommand.RuleCommands) {
-                subcommand(command)
-            }
-        }
-        val sound = subcommand("sound") {
-            for (command in SoundCommand.SoundCommands) {
-                subcommand(command)
-            }
-        }
-        val creativeItems = subcommand("creativeItems") {
-            for (command in CreativeItemsCommand.creativeItemsCommands) {
-                subcommand(command)
-            }
-        }
-
-        val restrictDebugOptions = subcommand("restrictDebugOptions") {
-            for (command in RestrictDebugOptionsCommand.restrictDebugOptionsCommands) {
-                subcommand(command)
-            }
-        }
-
-        val check = NoxesiumCheckCommand().createCommand()
-        val clientSettings = ClientSettingsCommand().createCommand()
-        val openLink = OpenLinkCommand().createCommand()
-
-        commandAPICommand("noxesiumapi", "noxesiumapi") {
-            withPermission("noxesiumapi.command")
-            subcommand(rules)
-            subcommand(sound)
-            subcommand(creativeItems)
-            subcommand(restrictDebugOptions)
-            subcommand(check)
-            subcommand(clientSettings)
-            subcommand(openLink)
-        }
-        Logger.info("/noxesiumapi command loaded!")
     }
 
 }

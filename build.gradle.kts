@@ -1,47 +1,42 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
 
 group = "me.iris"
 version = "${property("version")}"
 
 plugins {
-    kotlin("jvm") version "2.1.20"
-    id("com.gradleup.shadow") version "8.3.3"
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.paper.userdev)
     `maven-publish`
 }
 
+paperweight.reobfArtifactConfiguration = ReobfArtifactConfiguration.MOJANG_PRODUCTION
+
 repositories {
     mavenCentral()
-    mavenLocal()
-    maven("https://repo.papermc.io/repository/maven-public/") {
-        name = "papermc-repo"
-    }
-    maven("https://oss.sonatype.org/content/groups/public/") {
-        name = "sonatype"
-    }
-    maven("https://maven.noxcrew.com/public") {
-        name = "Noxcrew Public Maven Repository"
-    }
-    maven(url = uri("https://repo.codemc.org/repository/maven-public/"))
+    maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://oss.sonatype.org/content/groups/public/")
+    maven("https://maven.noxcrew.com/public")
+    maven("https://repo.codemc.org/repository/maven-public/")
+    maven("https://repo.viaversion.com")
+    maven("https://maven.enginehub.org/repo/")
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.10-R0.1-SNAPSHOT")
-    compileOnly("dev.jorel:commandapi-paper-core:11.0.0")
-    implementation("fr.skytasul:glowingentities:1.4.9")
-    implementation("com.noxcrew.noxesium:api:2.8.0")
-    implementation("com.noxcrew.noxesium:paper:2.8.0")
-    implementation("dev.jorel:commandapi-kotlin-paper:11.0.0")
-    implementation("dev.jorel:commandapi-paper-shade:11.0.0")
+    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
+    implementation(libs.glowingentities)
+    implementation(libs.bundles.noxesium)
+    implementation(libs.viaversion)
+    implementation(libs.prtree)
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
 }
 
-val targetJavaVersion = 21
 kotlin {
-    jvmToolchain(targetJavaVersion)
+    jvmToolchain(21)
 }
 
 tasks.build {
@@ -71,7 +66,6 @@ java {
 }
 
 tasks.withType<ShadowJar> {
-    relocate("dev.jorel.commandapi", "me.iris.noxesiumapi.commandapi")
     manifest {
         attributes["paperweight-mappings-namespace"] = "mojang"
     }
@@ -100,12 +94,11 @@ publishing {
     repositories {
         maven {
             name = "astrofoxRepository"
-            url = uri("http://144.21.60.201:25566/releases")
+            url = uri("https://maven.femboys.tech/releases")
             credentials(PasswordCredentials::class)
             authentication {
                 create<BasicAuthentication>("basic")
             }
-            isAllowInsecureProtocol = true
         }
     }
     publications {

@@ -1,21 +1,22 @@
 package me.iris.noxesiumapi
 
-import com.noxcrew.noxesium.api.qib.QibDefinition
-import com.noxcrew.noxesium.paper.api.EntityRuleManager
-import com.noxcrew.noxesium.paper.api.NoxesiumManager
-import com.noxcrew.noxesium.paper.api.network.NoxesiumPackets
-import com.noxcrew.noxesium.paper.api.rule.EntityRules
-import me.iris.noxesiumapi.event.NoxesiumPlayerRiptideEvent
-import me.iris.noxesiumapi.event.NoxesiumQibTriggeredEvent
-import me.iris.noxesiumapi.packets.SoundManager
-import me.iris.noxesiumapi.serverrules.CreativeItemsManager
-import me.iris.noxesiumapi.serverrules.RestrictDebugOptionsManager
-import me.iris.noxesiumapi.serverrules.SmoothTrident
-import org.bukkit.Bukkit
+import com.noxcrew.noxesium.paper.commands.listCommand
+import com.noxcrew.noxesium.paper.commands.openLinkCommand
+import com.noxcrew.noxesium.paper.commands.playSoundCommand
+import com.noxcrew.noxesium.paper.commands.componentCommands
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
+import com.noxcrew.noxesium.api.NoxesiumEntrypoint
+import com.noxcrew.noxesium.paper.ExternalApi
+import com.noxcrew.noxesium.paper.NoxesiumPaper
+import com.noxcrew.noxesium.paper.entrypoint.CommonPaperNoxesiumEntrypoint
+import com.noxcrew.packet.PacketApi
+import io.papermc.paper.command.brigadier.CommandSourceStack
+import me.iris.noxesiumapi.components.CustomCreativeItemsManager
+import me.iris.noxesiumapi.components.GuiConstraintsManager
+import me.iris.noxesiumapi.components.RestrictDebugOptionsManager
+import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
-import org.slf4j.Logger
 import java.util.*
-import com.noxcrew.noxesium.paper.api.rule.ServerRules as NoxesiumServerRules
 
 /**
  * If you depend on the NoxesiumAPI plugin use [NoxesiumAPIPlugin.getInstance]
@@ -24,61 +25,46 @@ import com.noxcrew.noxesium.paper.api.rule.ServerRules as NoxesiumServerRules
  * @sample NoxesiumAPIPlugin.onEnable
  */
 @Suppress("unused")
-class NoxesiumAPI(
-    private val plugin: JavaPlugin,
-    private val logger: Logger
-) {
+class NoxesiumAPI(val plugin: JavaPlugin) {
 
     companion object {
-        val qibDefinitions: MutableMap<String, QibDefinition> = mutableMapOf()
-        val creativeItemsManagers: MutableMap<UUID, CreativeItemsManager> = mutableMapOf()
+        private lateinit var externalApi: ExternalApi
+        val creativeItemsManagers: MutableMap<UUID, CustomCreativeItemsManager> = mutableMapOf()
         val restrictDebugOptionsManagers: MutableMap<UUID, RestrictDebugOptionsManager> = mutableMapOf()
-        lateinit var noxesiumManager: NoxesiumManager
-            private set
-        lateinit var entityRuleManager: EntityRuleManager
-            private set
-        lateinit var soundManager: SoundManager
-            private set
+        val guiConstraintsManagers: MutableMap<UUID, GuiConstraintsManager> = mutableMapOf()
+
+        fun isUsingNoxesium(player: Player) = externalApi.isUsingNoxesium(player)
+
+        fun getInstalledMods(player: Player): Map<String, String> = externalApi.getInstalledMods(player)
+    }
+    private val entrypoints = mutableSetOf<() -> NoxesiumEntrypoint>()
+    private val commands = mutableSetOf<() -> LiteralArgumentBuilder<CommandSourceStack>>()
+
+    fun load() {
+        NoxesiumPaper.prepare(plugin, PacketApi("noxcrew_packet_handler"))
+
+        registerEntrypoint { CommonPaperNoxesiumEntrypoint() }
+        registerNoxesiumCommand { listCommand() }
+        registerNoxesiumCommand { openLinkCommand() }
+        registerNoxesiumCommand { playSoundCommand() }
+        registerNoxesiumCommand { componentCommands() }
     }
 
-    fun register() {
-        // Register all managers
-        noxesiumManager = HookedNoxesiumManager(plugin, logger)
-        noxesiumManager.register()
-        entityRuleManager = EntityRuleManager(noxesiumManager)
-        entityRuleManager.register()
-        soundManager = SoundManager(noxesiumManager)
-
-        // Registers all rules
-        NoxesiumServerRules(noxesiumManager)
-        EntityRules(noxesiumManager)
-
-        NoxesiumPackets.SERVER_QIB_TRIGGERED.addListener(noxesiumManager) { packet, player ->
-            NoxesiumQibTriggeredEvent(player, packet.behavior, packet.qibType, packet.entityId).callEvent()
-        }
-
-        NoxesiumPackets.SERVER_RIPTIDE.addListener(noxesiumManager) { packet, player ->
-            NoxesiumPlayerRiptideEvent(player, packet.slot).callEvent()
-        }
-
-        Bukkit.getPluginManager().registerEvents(SmoothTrident(noxesiumManager), plugin)
+    fun enable() {
+        NoxesiumPaper.packetApi.register(plugin)
+        NoxesiumPaper.enable(entrypoints, commands)
+        externalApi = ExternalApi()
     }
 
-    fun getManager(): NoxesiumManager {
-        return noxesiumManager
+    fun disable() {
+        NoxesiumPaper.packetApi.unregister()
     }
 
-    fun getEntityRuleManager(): EntityRuleManager {
-        return entityRuleManager
+    fun registerEntrypoint(entrypoint: () -> NoxesiumEntrypoint) {
+        entrypoints += entrypoint
     }
 
-    fun getSoundManager(): SoundManager {
-        return soundManager
+    fun registerNoxesiumCommand(command: () -> LiteralArgumentBuilder<CommandSourceStack>) {
+        commands += command
     }
-
-    fun unregister() {
-        noxesiumManager.unregister()
-        entityRuleManager.unregister()
-    }
-
 }

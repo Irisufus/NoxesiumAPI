@@ -1,6 +1,6 @@
 package me.iris.noxesiumapi.util
 
-import com.noxcrew.noxesium.api.protocol.OffsetStringFormatter
+import com.noxcrew.noxesium.core.util.OffsetStringFormatter
 import net.kyori.adventure.text.Component
 
 @Suppress("unused")
