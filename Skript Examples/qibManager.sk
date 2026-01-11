@@ -1,0 +1,32 @@
+import:
+    me.iris.noxesiumapi.components.QibManager
+    com.noxcrew.noxesium.api.feature.qib.QibCondition
+    com.noxcrew.noxesium.api.feature.qib.QibEffect
+
+# All object arguments can be null
+function addQibDefinition(key: string, onEnter: object, onLeave: object, whileInside: object, onJump: object, onAttack: object, onUse: object, triggerEnterLeaveOnSwitch: boolean):
+    QibManager.INSTANCE.addDefinition({_key}, {_onEnter}, {_onLeave}, {_whileInside}, {_onJump}, {_onAttack}, {_onUse}, {_triggerEnterLeaveOnSwitch})
+
+function removeQibDefinition(key: string):
+    QibManager.INSTANCE.removeDefinition({_key})
+
+function setQibBehavior(entity: entity, key: string):
+    QibManager.INSTANCE.setBehavior({_entity}, {_key})
+
+function resetQibBehavior(entity: entity):
+    QibManager.INSTANCE.resetBehavior({_entity})
+
+function registerJumpPad():
+    # Makes the player jump
+    set {_jump} to new QibEffect.SetVelocityYawPitch(0, true, -30, false, 1.5, 180)
+    set {_jumpEffect} to new QibEffect.Wait(1, {_jumpEffect})
+    # Plays a sound
+	set {_soundEffect} to new QibEffect.PlaySound("namespace", "sound", 1, 1)
+    # Combines the effects
+	set {_list} to new ArrayList()
+	{_list}.add({_jumpEffect})
+	{_list}.add({_soundEffect})
+	set {_comboEffect} to new QibEffect.Multiple({_list})
+
+    # Registers the qib definition
+    addQibDefinition("jumpPad", null, null, {_comboEffect}, null, null, null, false)

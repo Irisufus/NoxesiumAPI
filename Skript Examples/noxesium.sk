@@ -1,45 +1,102 @@
-# Import the classes using Skript-Reflect
 import:
-    me.iris.noxesiumapi.NoxesiumAPI
-    me.iris.noxesiumapi.serverrules.SetRules
-    com.noxcrew.noxesium.api.protocol.NoxesiumFeature
+    me.iris.noxesiumapi.components.SetBlockEntityComponents
+    me.iris.noxesiumapi.components.SetEntityComponents
+    me.iris.noxesiumapi.components.SetGameComponents
+    me.iris.noxesiumapi.components.SetItemComponents
     
-# Get the NoxesiumManager and EntityGlow instances when the server starts
 on load:
     set {-data::noxesium::instance} to the instance of plugin "NoxesiumAPI"
-    set {-data::noxesium::manager} to {-data::noxesium::instance}.getNoxesiumAPI().getManager()
     set {-data::noxesium::glow} to {-data::noxesium::instance}.getEntityGlow()
+    set {-data::noxesium::glow} to {-data::noxesium::instance}.getBlockGlow()
 
-# A function that checks if a player is using Noxesium V2
 function hasNoxesium(player: player) :: boolean:
-    set {_result} to {-data::noxesium::manager}.isUsingNoxesium({_player}, NoxesiumFeature.API_V2)
-    return {_result}
+    return NoxesiumAPI.INSTANCE.isUsingNoxesium({_player})
 
-# Functions to set server rules for a player
-function tridentCollision(player: player, value: boolean):
-    new SetRules({_player}).disableSpinAttackCollision({_value})
+# Game Components
+
+function disableSpinAttackCollision(player: player, value: boolean):
+    SetGameComponents.INSTANCE.disableSpinAttackCollision({_player}, {_value})
 
 function heldItemNameOffset(player: player, value: integer):
-    new SetRules({_player}).heldItemNameOffset({_value})
+    SetGameComponents.INSTANCE.heldItemNameOffset({_player}, {_value})
 
 function cameraLocked(player: player, value: boolean):
-    new SetRules({_player}).cameraLocked({_value})
+    SetGameComponents.INSTANCE.cameraLocked({_player}, {_value})
 
 function disableVanillaMusic(player: player, value: boolean):
-    new SetRules({_player}).disableVanillaMusic({_value})
+    SetGameComponents.INSTANCE.disableVanillaMusic({_player}, {_value})
 
 function disableBoatCollisions(player: player, value: boolean):
-    new SetRules({_player}).disableBoatCollisions({_value})
+    SetGameComponents.INSTANCE.disableBoatCollisions({_player}, {_value})
+
+function disableDeferredChunkUpdates(player: player, value: boolean):
+    SetGameComponents.INSTANCE.disableDeferredChunkUpdates({_player}, {_value})
 
 function showMapInUi(player: player, value: boolean):
-    new SetRules({_player}).showMapInUi({_value})
+    SetGameComponents.INSTANCE.showMapInUi({_player}, {_value})
 
-function disableMapInUi(player: player, value: boolean):
-    new SetRules({_player}).disableMapInUi({_value})
-    
+function clientAuthoritativeRiptideTridents(player: player, value: boolean):
+    SetGameComponents.INSTANCE.clientAuthoritativeRiptideTridents({_player}, {_value})
+
 function riptideCoyoteTime(player: player, value: integer):
-    new SetRules({_player}).riptideCoyoteTime({_value})
+    SetGameComponents.INSTANCE.riptideCoyoteTime({_player}, {_value})
 
-function smootherClientTridents(player: player, value: boolean):
-    new SetRules({_player}).enableSmootherClientTrident({_value})
-    
+function riptidePreCharging(player: player, value: boolean):
+    SetGameComponents.INSTANCE.riptidePreCharging({_player}, {_value})
+
+function serverAuthoritativeBlockUpdates(player: player, value: boolean):
+    SetGameComponents.INSTANCE.serverAuthoritativeBlockUpdates({_player}, {_value})
+
+function clientAuthoritativeElytra(player: player, value: boolean):
+    SetGameComponents.INSTANCE.clientAuthoritativeElytra({_player}, {_value})
+
+function elytraCoyoteTime(player: player, value: number):
+    SetGameComponents.INSTANCE.elytraCoyoteTime({_player}, {_value})
+
+function handItemOverride(player: player, value: item):
+    SetGameComponents.INSTANCE.handItemOverride({_player}, {_value})
+
+# Item Components
+
+function immovable(item: item, value: boolean):
+    SetItemComponents.INSTANCE.immovable({_item}, {_value})
+
+function hoverSound(item: item, value: object):
+    SetItemComponents.INSTANCE.hoverSound({_item}, {_value})
+
+function hoverable(item: item, value: object):
+    SetItemComponents.INSTANCE.hoverable({_item}, {_value})
+
+function itemQibBehavior(item: item, value: string):
+    SetItemComponents.INSTANCE.qibBehavior({_item}, {_value})
+
+# Entity Components
+
+function disableBubbles(entity: entity, value: boolean):
+    SetEntityComponents.INSTANCE.disableBubbles({_entity}, {_value})
+
+function beamColor(entity: entity, value: object):
+    SetEntityComponents.INSTANCE.beamColor({_entity}, {_value})
+
+function beamColorFade(entity: entity, value: object):
+    SetEntityComponents.INSTANCE.beamColorFade({_entity}, {_value})
+
+function entityQibBehavior(entity: entity, value: string):
+    SetEntityComponents.INSTANCE.qibBehavior({_entity}, {_value})
+
+function glowColor(entity: entity, value: object):
+    SetEntityComponents.INSTANCE.glowColor({_entity}, {_value})
+
+function hitboxOverride(entity: entity, value: object):
+    SetEntityComponents.INSTANCE.hitboxOverride({_entity}, {_value})
+
+function hitboxColor(entity: entity, value: object):
+    SetEntityComponents.INSTANCE.hitboxColor({_entity}, {_value})
+
+function attackable(entity: entity, value: boolean):
+    SetEntityComponents.INSTANCE.attackable({_entity}, {_value})
+
+# Block Entity Components
+
+function beaconBeamHeight(block: block, value: integer):
+    SetBlockEntityComponents.INSTANCE.beaconBeamHeight({_block}, {_value})
