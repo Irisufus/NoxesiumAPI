@@ -7,8 +7,8 @@ import:
 
 on load:
     set {-data::noxesium::instance} to the instance of plugin "NoxesiumAPI"
-    set {-data::noxesium::glow} to {-data::noxesium::instance}.getEntityGlow()
-    set {-data::noxesium::glow} to {-data::noxesium::instance}.getBlockGlow()
+    set {-data::noxesium::entityglow} to {-data::noxesium::instance}.getEntityGlow()
+    set {-data::noxesium::blockglow} to {-data::noxesium::instance}.getBlockGlow()
 
 function hasNoxesium(player: player) :: boolean:
     if NoxesiumPlayerManager.getInstance().getPlayer({_player}'s uuid) is set:
