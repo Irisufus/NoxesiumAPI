@@ -3,14 +3,18 @@ import:
     me.iris.noxesiumapi.components.SetEntityComponents
     me.iris.noxesiumapi.components.SetGameComponents
     me.iris.noxesiumapi.components.SetItemComponents
-    
+    com.noxcrew.noxesium.api.player.NoxesiumPlayerManager
+
 on load:
     set {-data::noxesium::instance} to the instance of plugin "NoxesiumAPI"
     set {-data::noxesium::glow} to {-data::noxesium::instance}.getEntityGlow()
     set {-data::noxesium::glow} to {-data::noxesium::instance}.getBlockGlow()
 
 function hasNoxesium(player: player) :: boolean:
-    return NoxesiumAPI.INSTANCE.isUsingNoxesium({_player})
+    if NoxesiumPlayerManager.getInstance().getPlayer({_player}'s uuid) is set:
+        return true
+    else:
+        return false
 
 # Game Components
 
