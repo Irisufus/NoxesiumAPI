@@ -11,7 +11,6 @@ on load:
     set {-data::noxesium::glow} to {-data::noxesium::instance}.getBlockGlow()
 
 function hasNoxesium(player: player) :: boolean:
-    send NoxesiumPlayerManager.getInstance().getPlayer({_player}'s uuid) to ops
     if NoxesiumPlayerManager.getInstance().getPlayer({_player}'s uuid) is set:
         return true
     else:
