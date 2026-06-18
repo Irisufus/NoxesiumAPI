@@ -1,10 +1,10 @@
 [versions]
-kotlin = "2.2.21"
-shadow = "9.0.0-beta4"
-paper-userdev = "2.0.0-beta.19"
-glowingentities = "1.4.10"
-noxesium = "3.0.0-rc.3-SNAPSHOT"
-viaversion = "5.4.2"
+kotlin = "2.3.21"
+shadow = "9.4.1"
+paper-userdev = "2.0.0-beta.21"
+glowingentities = "1.4.11"
+noxesium = "3.1.0"
+viaversion = "5.9.1"
 prtree = "1.5.0"
 
 [libraries]

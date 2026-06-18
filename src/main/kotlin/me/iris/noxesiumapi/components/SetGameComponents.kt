@@ -109,4 +109,12 @@ object SetGameComponents {
         player.setNoxesiumComponent(NmsGameComponentTypes.HAND_ITEM_OVERRIDE, item)
     }
 
+    fun disableAllDebugRenderers(player: Player, value: Boolean = false) {
+        if (value) {
+            player.setNoxesiumComponent(CommonGameComponentTypes.DISABLE_ALL_DEBUG_RENDERERS, Unit.INSTANCE)
+        } else {
+            player.setNoxesiumComponent(CommonGameComponentTypes.DISABLE_ALL_DEBUG_RENDERERS, null)
+        }
+    }
+
 }
