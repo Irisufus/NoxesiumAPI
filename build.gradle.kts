@@ -24,10 +24,12 @@ repositories {
     maven("https://repo.codemc.org/repository/maven-public/")
     maven("https://repo.viaversion.com")
     maven("https://maven.enginehub.org/repo/")
+    maven("https://repo.skriptlang.org/releases")
 }
 
 dependencies {
     paperweight.paperDevBundle("26.1.2.build.+")
+    compileOnly(libs.skript)
     implementation(libs.glowingentities)
     implementation(libs.bundles.noxesium)
     implementation(libs.viaversion)
