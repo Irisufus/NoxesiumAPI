@@ -1,13 +1,15 @@
 [versions]
-kotlin = "2.3.21"
-shadow = "9.4.1"
-paper-userdev = "2.0.0-beta.21"
+kotlin = "2.4.20"
+shadow = "9.6.1"
+paper-userdev = "2.0.0-beta.24"
 glowingentities = "1.4.11"
-noxesium = "3.1.0"
+noxesium = "3.2.4"
 viaversion = "5.9.1"
 prtree = "1.5.0"
+skript = "2.15.0"
 
 [libraries]
+skript = { module = "com.github.SkriptLang:Skript", version.ref = "skript" }
 glowingentities = { module = "fr.skytasul:glowingentities", version.ref = "glowingentities" }
 noxesium-api = { module = "com.noxcrew.noxesium:api", version.ref = "noxesium" }
 noxesium-paper-platform = { module = "com.noxcrew.noxesium:paper-platform", version.ref = "noxesium" }
